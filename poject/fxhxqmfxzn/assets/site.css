@@ -25,6 +25,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--page);
   color: var(--ink);
   font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
@@ -162,6 +163,7 @@ h1 {
 .content {
   display: grid;
   gap: 18px;
+  min-width: 0;
 }
 
 .section {
@@ -169,6 +171,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: clamp(18px, 3vw, 28px);
+  min-width: 0;
 }
 
 .section h2 {
@@ -220,16 +223,16 @@ tbody tr:nth-child(even) td {
 }
 
 .note-list {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
 }
 
 .calc-grid,
 .memory-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
 }
 
 .formula-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
 }
 
 .note,
@@ -238,11 +241,17 @@ tbody tr:nth-child(even) td {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 14px 16px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .note p,
 .memory p {
   margin-bottom: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .info {
