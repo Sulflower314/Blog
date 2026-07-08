@@ -1,1629 +1,1121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    
+    <meta name="author" content="The Redefine Team">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/redefine-og.webp">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
+<meta name="twitter:image" content="http://example.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Theme Redefine - Redefine Your Hexo Journey.
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
 <link rel="stylesheet" href="/css/style.css">
 
-  
+
     
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
 
-  
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+    
 
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":[{"icon":"fa-brands fa-github","url":null},{"icon":"fa-brands fa-twitter","url":null},{"icon":"fa-solid fa-at","url":"you@example.com"},{"icon":"fa-brands fa-telegram","url":null},{"icon":"/images/custom-icon.svg","url":null}],"qrs":[{"icon":"fa-brands fa-weixin","qr":null},{"icon":"/images/custom-icon.svg","qr":null}]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}}},"version":"2.9.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date."};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
 <meta name="generator" content="Hexo 7.3.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+	
+    <style>
+        .home-banner-container {
+            background: none !important;
+        }
+        .home-article-item,
+        .sidebar-links,
+        .sidebar-content,
+        a.page-number,
+        a.extend,
+        .sidebar-links .links:hover,
+        .right-bottom-tools,
+        footer.footer {
+            background-color: var(--background-color-transparent-80) !important;
+        }
+        .right-bottom-tools:hover,
+        a.page-number:hover,
+        a.extend:hover {
+            background-color: var(--primary-color) !important;
+        }
+        .site-info,
+        .home-article-sticky-label {
+            background-color: var(--background-color-transparent-15) !important;
+        }
+        .home-article-sticky-label {
+            backdrop-filter: none !important;
+        }
+    </style>
+    <div class="home-banner-background transition-fade fixed top-0 left-0 w-screen h-screen scale-125 sm:scale-110 box-border will-change-transform bg-cover">
+        <img src="/images/wallhaven-wqery6-light.webp" alt="home-banner-background" class="w-full h-full object-cover dark:hidden">
+        <img src="/images/wallhaven-wqery6-dark.webp" alt="home-banner-background" class="w-full h-full object-cover hidden dark:block">
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+
+
+<div class="home-banner-container flex justify-center items-center transition-fade relative">
+    
+    <div class="content mt-8 flex flex-col justify-center items-center transition-fade-down">
+        <div class="description flex flex-col justify-center items-center w-screen font-medium text-center"
         
-          <a class="main-nav-link" href="/">Home</a>
+        >
+            Theme Redefine
+            
+            
+            
+            
+            
+        </div>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
     </div>
-  </div>
+    <style>
+        /* Mobile-specific QR code styles */
+        .qr-toggle-item.qr-active .qr-popup {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        
+        /* Prevent button from staying in focus/hover state on mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .qr-toggle-item:focus,
+            .qr-toggle-item:hover {
+                background-color: transparent;
+            }
+            
+            .qr-toggle-item .qr-trigger:focus,
+            .qr-toggle-item .qr-trigger:hover {
+                background-color: transparent;
+                color: inherit;
+            }
+            
+            /* Only show active state when explicitly toggled */
+            .qr-popup {
+                visibility: hidden !important;
+                opacity: 0 !important;
+            }
+        }
+    </style>
+</div>
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar has-home-banner">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                <h1>
+                Theme Redefine
+                </h1>
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="active"
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-分析化学期末复习指南" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/" class="article-date">
-  <time class="dt-published" datetime="2026-07-06T09:25:53.000Z" itemprop="datePublished">2026-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-  </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">分析化学期末复习指南</a>
-    </h1>
-  
+		</div>
 
-      </header>
+		<div class="main-content-body transition-fade-up">
+			
+			<div class="home-sidebar-container">
+    <div class="sticky-container sticky">
+        
+        
+            
+            <div class="sidebar-content" >
+                <div class="avatar flex justify-center">
+    <img src="/images/redefine-avatar.svg">
+</div>
+                <div class="author flex flex-col justify-center my-2.5 mx-0">
+    <div class="name">The Redefine Team</div>
     
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>期末复习最怕资料堆在一起却不知道先看哪里，所以我把分析化学的高频考点整理成了一个更适合考前快速翻阅的复习网站。它不是完整教材替代品，而是一份面向考试场景的速查指南：先帮你抓住题型，再把常见判断、公式、误差分析和计算题步骤压缩到同一页里。</p>
+        <div class="label">Lv1</div>
+    
+</div>
+                <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">8</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+            </div>
         
-          <p class="article-more-link">
-            <a href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/#more">Read More</a>
-          </p>
-        
-      
+
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/" data-id="cmr90zz0n0001f4s0cczzfmqe" data-title="分析化学期末复习指南" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/" rel="tag">分析化学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" rel="tag">期末复习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8D%AF%E5%AD%A6/" rel="tag">药学</a></li></ul>
+</div>
 
-    </footer>
-  </div>
-  
-</article>
+			
 
-
-
-  
-    <article id="post-思想道德与法治复习网站" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/" class="article-date">
-  <time class="dt-published" datetime="2026-07-04T14:46:10.000Z" itemprop="datePublished">2026-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/">学习资源</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+			<div class="main-content">
+				<div class="home-content-container">
+    <ul class="home-article-list">
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/">📚 思想道德与法治期末复习网站</a>
-    </h1>
-  
+            <li class="home-article-item">
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>这是一套交互式复习工具，把题库变成了能刷、能背、能定位的复习台。</p>
-</blockquote>
-<h2 id="网站功能"><a href="#网站功能" class="headerlink" title="网站功能"></a>网站功能</h2><h3 id="📖-题目浏览与筛选"><a href="#📖-题目浏览与筛选" class="headerlink" title="📖 题目浏览与筛选"></a>📖 题目浏览与筛选</h3><p>网站收录了教材六个章节的<strong>简答题、论述题、材料题</strong>，按章节分类整理，支持：</p>
-<ul>
-<li><strong>按章节筛选</strong>：绪论、第一章（人生观）、第二章（人生价值）、第三章（理想信念）、第四章（社会主义核心价值观）、第五章（道德观）、第六章（法治观）</li>
-<li><strong>按题型筛选</strong>：简答题 &#x2F; 论述题 &#x2F; 材料题</li>
-<li><strong>全文搜索</strong>：支持搜索题目、关键词、年份（如 <code>2023春</code>、<code>法治</code>、<code>核心价值观</code>）</li>
-<li><strong>只看真题</strong>：勾选后可只显示标注了考试年份的题目</li>
-</ul>
-<h3 id="📝-三层答案体系"><a href="#📝-三层答案体系" class="headerlink" title="📝 三层答案体系"></a>📝 三层答案体系</h3><p>每道题都配有<strong>三个答案标签页</strong>，背诵时互不干扰：</p>
-<table>
-<thead>
-<tr>
-<th>标签页</th>
-<th>内容说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>🏛 原文件答案</td>
-<td>教材&#x2F;考试原文件中的参考答案，可据此核对教材出处</td>
-</tr>
-<tr>
-<td>🌐 联网补充</td>
-<td>考场可写答案，做了精简和结构优化，附带思维导图框架提示</td>
-</tr>
-<tr>
-<td>💡 答题技巧</td>
-<td>针对该题型的考场策略和注意要点</td>
-</tr>
-</tbody></table>
-<h3 id="📊-学习追踪"><a href="#📊-学习追踪" class="headerlink" title="📊 学习追踪"></a>📊 学习追踪</h3><ul>
-<li>可以<strong>标记已掌握</strong>的题目，进度保存到浏览器中</li>
-<li>顶部统计面板实时显示总题数、有年份标注的真题数、已掌握数</li>
-<li>支持<strong>默认收起答案</strong>，先自测再查看</li>
-</ul>
-<h3 id="🎨-其他设计"><a href="#🎨-其他设计" class="headerlink" title="🎨 其他设计"></a>🎨 其他设计</h3><ul>
-<li>明暗主题切换</li>
-<li>侧边栏章节导航，显示各章节题目数量</li>
-<li>复习来源链接（社会主义核心价值观、爱国主义纲要、宪法原文等）</li>
-<li>响应式布局，手机端也能使用</li>
-</ul>
-<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p>题目和答案来自教材《思想道德与法治》各章节原题，补充了近年考试真题（2022–2024春季&#x2F;秋季），并参考了以下官方文件：</p>
-<ul>
-<li>《社会主义核心价值观 24 字基本内容》</li>
-<li>《新时代爱国主义教育实施纲要》</li>
-<li>《新时代公民道德建设实施纲要》</li>
-<li>习近平在庆祝中国共产党成立100周年大会上的讲话</li>
-<li>中央全面依法治国工作会议相关报道</li>
-<li>《中华人民共和国宪法》</li>
-<li>章节思维导图</li>
-</ul>
-<h2 id="在线访问"><a href="#在线访问" class="headerlink" title="在线访问"></a>在线访问</h2><p>点击下方链接即可使用：</p>
-<p><a target="_blank" rel="noopener" href="http://blog.fffcx.com/poject/ssddyfzreview/">👉 思想道德与法治期末复习工具</a></p>
-<blockquote>
-<p>提示：网站的答案背诵功能和进度追踪如果访问失败，可直接在浏览器地址栏输入 blog.ffffcx.com&#x2F;poject&#x2F;ssddyfzreview&#x2F; 访问。</p>
-</blockquote>
-<p>祝期末顺利！</p>
+                
 
-      
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/07/critique-guide/">
+                            
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Critique Mode — Detailed ReferenceRead this when running Step 7 of the workflow (user asked for review, or self-check before delivery). The main SKILL.md already covers the 5 dimensions and output ...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Tue Jul 07 2026 17:04:31 GMT+0800">
+                
+                    2026-07-07
+                
+            </span>
+        </span>
+        
+        
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/" data-id="cmr6hgb6300027gs0eqmt3zve" data-title="📚 思想道德与法治期末复习网站" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag">复习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%9D%E6%94%BF/" rel="tag">思政</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%9F%E6%9C%AB/" rel="tag">期末</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
+    <a href="/2026/07/07/critique-guide/">Read more<span class="seo-reader-text"></span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-
-
-  
-    <article id="post-分析化学课程知识总结" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" class="article-date">
-  <time class="dt-published" datetime="2026-07-04T10:44:37.000Z" itemprop="datePublished">2026-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+                </div>
+            </li>
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">分析化学课程知识总结</a>
-    </h1>
-  
+            <li class="home-article-item">
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="分析化学课程知识总结"><a href="#分析化学课程知识总结" class="headerlink" title="分析化学课程知识总结"></a>分析化学课程知识总结</h1><blockquote>
-<p>授课教师：李浩老师（药学院深圳）&amp; 郑义武副教授（药学院深圳）<br>教材：武汉大学《分析化学》第六版&#x2F;湖南大学版&#x2F;人卫第9版<br>成绩构成：平时40% + 期末60%</p>
-</blockquote>
-<hr>
-<h2 id="第一章-分析化学绪论"><a href="#第一章-分析化学绪论" class="headerlink" title="第一章 分析化学绪论"></a>第一章 分析化学绪论</h2><h3 id="分析化学的定义"><a href="#分析化学的定义" class="headerlink" title="分析化学的定义"></a>分析化学的定义</h3><p>分析化学是关于测定物质的质和量的科学，是通过化学、物理、生物等手段获得物质、结构和形态等信息的方法论。</p>
-<h3 id="分析方法的分类"><a href="#分析方法的分类" class="headerlink" title="分析方法的分类"></a>分析方法的分类</h3><table>
-<thead>
-<tr>
-<th>分类依据</th>
-<th>类别</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>按任务</td>
-<td>定性分析、定量分析、结构分析、形态分析</td>
-</tr>
-<tr>
-<td>按对象</td>
-<td>无机分析、有机分析、生物分析</td>
-</tr>
-<tr>
-<td>按原理</td>
-<td>化学分析（滴定法、重量法）、仪器分析（光谱、电化学、色谱等）</td>
-</tr>
-<tr>
-<td>按试样用量</td>
-<td>常量（&gt;0.1g）、半微量（0.01<del>0.1g）、微量（0.1</del>10mg）、超微量（&lt;0.1mg）</td>
-</tr>
-<tr>
-<td>按组分含量</td>
-<td>常量（&gt;1%）、微量（0.01%~1%）、痕量（&lt;0.01%）</td>
-</tr>
-</tbody></table>
-<h3 id="样品分析的基本步骤"><a href="#样品分析的基本步骤" class="headerlink" title="样品分析的基本步骤"></a>样品分析的基本步骤</h3><ol>
-<li>采样（sampling）</li>
-<li>前处理（pretreatment）</li>
-<li>分析测定（analysis）</li>
-<li>分析数据处理与方法评价</li>
-</ol>
-<h3 id="分析化学的3S-3A"><a href="#分析化学的3S-3A" class="headerlink" title="分析化学的3S+3A"></a>分析化学的3S+3A</h3><ul>
-<li>快速（speediness）、灵敏（sensitivity）、选择性好（selectivity）</li>
-<li>准确（accuracy）、自动化（automatics）、实用性（application）</li>
-</ul>
-<hr>
-<h2 id="第二章-误差和分析数据处理"><a href="#第二章-误差和分析数据处理" class="headerlink" title="第二章 误差和分析数据处理"></a>第二章 误差和分析数据处理</h2><h3 id="误差分类"><a href="#误差分类" class="headerlink" title="误差分类"></a>误差分类</h3><table>
-<thead>
-<tr>
-<th>项目</th>
-<th>系统误差</th>
-<th>偶然误差</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>来源</td>
-<td>方法误差、仪器误差、试剂误差、操作误差</td>
-<td>环境变化、操作者心情等偶然因素</td>
-</tr>
-<tr>
-<td>性质</td>
-<td>单向性、恒定性、重现性、可避免</td>
-<td>不可测、服从概率统计规律</td>
-</tr>
-<tr>
-<td>影响</td>
-<td>准确度</td>
-<td>精密度</td>
-</tr>
-<tr>
-<td>消除方法</td>
-<td>消除原因或校正</td>
-<td>增加平行测定次数</td>
-</tr>
-</tbody></table>
-<h3 id="准确度的表示"><a href="#准确度的表示" class="headerlink" title="准确度的表示"></a>准确度的表示</h3><ul>
-<li><strong>绝对误差</strong>：δ &#x3D; x - μ</li>
-<li><strong>相对误差</strong>：δr &#x3D; (x - μ)&#x2F;μ × 100%</li>
-<li>化学分析准确度要求：&lt; 0.1%</li>
-<li>仪器分析准确度：约 2%</li>
-</ul>
-<p><strong>重要计算</strong>：</p>
-<ul>
-<li>分析天平（0.0001g 误差）最小称样量：m &gt; 0.2g（0.1%误差时）</li>
-<li>滴定管（0.01mL 误差）最小体积：V &gt; 20mL</li>
-</ul>
-<h3 id="精密度的表示"><a href="#精密度的表示" class="headerlink" title="精密度的表示"></a>精密度的表示</h3><ul>
-<li><strong>绝对偏差</strong>：di &#x3D; xi - x̄</li>
-<li><strong>平均偏差</strong>：d̄ &#x3D; sum|xi - x̄|&#x2F;n</li>
-<li><strong>标准偏差</strong>：S &#x3D; sqrt[sum(xi - x̄)^2&#x2F;(n-1)]</li>
-<li><strong>相对标准偏差（RSD）</strong> &#x3D; S&#x2F;x̄ × 100%（最常用）</li>
-</ul>
-<h3 id="精密度层次"><a href="#精密度层次" class="headerlink" title="精密度层次"></a>精密度层次</h3><ul>
-<li><strong>重复性</strong>：同人、同条件、短时间</li>
-<li><strong>中间精密度</strong>：同室、不同条件</li>
-<li><strong>重现性</strong>：不同实验室、不同人员</li>
-</ul>
-<h3 id="误差传递规律"><a href="#误差传递规律" class="headerlink" title="误差传递规律"></a>误差传递规律</h3><ul>
-<li>和&#x2F;差的绝对误差 &#x3D; 各测量值绝对误差的和&#x2F;差</li>
-<li>积&#x2F;商的相对误差 &#x3D; 各测量值相对误差的和&#x2F;差</li>
-</ul>
-<h3 id="有效数字"><a href="#有效数字" class="headerlink" title="有效数字"></a>有效数字</h3><p><strong>修约规则</strong>：”四舍六入五留双”</p>
-<ul>
-<li>&lt;&#x3D; 4 舍去</li>
-<li><blockquote>
-<p>&#x3D; 6 进位</p>
-</blockquote>
-</li>
-<li>&#x3D; 5 时：5后不为0则进；5后为0则奇进偶舍</li>
-</ul>
-<p><strong>运算规则</strong>：</p>
-<ul>
-<li>加减法：以小数点后位数最少的数据为基准</li>
-<li>乘除法：以有效数字位数最少的数据为基准</li>
-</ul>
-<p><strong>特殊常数</strong>：</p>
-<ul>
-<li>pH、lgK等对数的有效数字取决于小数点后位数</li>
-<li>pH &#x3D; 6.07（两位有效数字），[H⁺] &#x3D; 8.5 x 10^-7</li>
-</ul>
-<h3 id="统计检验"><a href="#统计检验" class="headerlink" title="统计检验"></a>统计检验</h3><p><strong>Q检验法（舍弃商法）</strong>：<br>Q &#x3D; |x_可疑 - x_邻近| &#x2F; (x_max - x_min)<br>Q &gt; Q_表则舍去</p>
-<p><strong>Grubbs检验法</strong>：<br>G &#x3D; |x_可疑 - x̄| &#x2F; S<br>G &gt; G_表则舍去</p>
-<p><strong>t检验（显著性检验）</strong>：</p>
-<ul>
-<li>样本均值与标准值比较：t &#x3D; |x̄ - μ|sqrt(n)&#x2F;S</li>
-<li>配对样本t检验</li>
-<li>独立两组样本t检验</li>
-</ul>
-<p><strong>F检验（精密度比较）</strong>：<br>F &#x3D; S1^2&#x2F;S2^2（S1 &gt; S2）</p>
-<h3 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h3><ul>
-<li>N(μ, σ^2)：μ为总体平均值，σ为总体标准偏差</li>
-<li>标准正态分布 N(0,1)</li>
-<li>3σ原则：测量值几乎全部落在(μ ± 3σ)内</li>
-<li>置信区间：μ &#x3D; x̄ ± u×σ&#x2F;sqrt(n) 或 μ &#x3D; x̄ ± t×S&#x2F;sqrt(n)</li>
-</ul>
-<hr>
-<h2 id="第三章-溶液化学平衡理论"><a href="#第三章-溶液化学平衡理论" class="headerlink" title="第三章 溶液化学平衡理论"></a>第三章 溶液化学平衡理论</h2><h3 id="活度与活度系数"><a href="#活度与活度系数" class="headerlink" title="活度与活度系数"></a>活度与活度系数</h3><ul>
-<li>a &#x3D; γ × c（有效浓度）</li>
-<li><strong>离子强度</strong>：I &#x3D; 1&#x2F;2 × sum(ci × zi^2)</li>
-<li><strong>德拜-休克尔公式</strong>：-lg(γᵢ) &#x3D; 0.512<em>zi^2</em>sqrt(I)&#x2F;(1+Ba×sqrt(I))</li>
-</ul>
-<h3 id="化学平衡与平衡常数"><a href="#化学平衡与平衡常数" class="headerlink" title="化学平衡与平衡常数"></a>化学平衡与平衡常数</h3><ul>
-<li>平衡常数 K-θ &#x3D; 生成物平衡浓度^系数 &#x2F; 反应物平衡浓度^系数</li>
-<li>反应商 Q 与 K-θ 比较判断反应方向</li>
-<li><strong>多重平衡规则</strong>：反应相加K相乘，反应相减K相除</li>
-</ul>
-<h3 id="物料守恒关系"><a href="#物料守恒关系" class="headerlink" title="物料守恒关系"></a>物料守恒关系</h3><ul>
-<li><strong>MBE</strong>（物料平衡式）：某元素各形态浓度之和 &#x3D; 分析浓度</li>
-<li><strong>CBE</strong>（电荷平衡式）：正电荷总浓度 &#x3D; 负电荷总浓度</li>
-<li><strong>PBE</strong>（质子条件式）：选取参考水准，得失质子数相等</li>
-</ul>
-<h3 id="分布系数（重要）"><a href="#分布系数（重要）" class="headerlink" title="分布系数（重要）"></a>分布系数（重要）</h3><ul>
-<li><strong>一元弱酸 HA</strong>：<ul>
-<li>delta_HA &#x3D; [H⁺]&#x2F;([H⁺] + Ka)</li>
-<li>delta_A- &#x3D; Ka&#x2F;([H⁺] + Ka)</li>
-<li>pH &#x3D; pKa 时 delta_HA &#x3D; delta_A- &#x3D; 0.5</li>
-</ul>
-</li>
-<li><strong>二元酸 H2A</strong>：delta_H2A + delta_HA- + delta_A2- &#x3D; 1</li>
-<li><strong>配合物 MLn</strong>：delta_M + delta_ML + … + delta_MLn &#x3D; 1</li>
-</ul>
-<h3 id="副反应系数与条件稳定常数"><a href="#副反应系数与条件稳定常数" class="headerlink" title="副反应系数与条件稳定常数"></a>副反应系数与条件稳定常数</h3><ul>
-<li>alpha_Y &#x3D; alpha_Y(H) + alpha_Y(N) - 1</li>
-<li>alpha_M &#x3D; alpha_M(L) + alpha_M(OH) - 1</li>
-<li><strong>条件稳定常数</strong>：K_MY &#x3D; K_MY × alpha_MY&#x2F;(alpha_M × alpha_Y)</li>
-<li>lgK_MY &#x3D; lgK_MY + lg(alpha_MY) - lg(alpha_M) - lg(alpha_Y)</li>
-</ul>
-<hr>
-<h2 id="第四章-滴定分析原理"><a href="#第四章-滴定分析原理" class="headerlink" title="第四章 滴定分析原理"></a>第四章 滴定分析原理</h2><h3 id="滴定分析对化学反应的要求"><a href="#滴定分析对化学反应的要求" class="headerlink" title="滴定分析对化学反应的要求"></a>滴定分析对化学反应的要求</h3><ol>
-<li>反应完全（K足够大）</li>
-<li>按化学计量关系进行（无副反应）</li>
-<li>反应速度快</li>
-<li>有合适的指示终点方法</li>
-</ol>
-<h3 id="滴定方式"><a href="#滴定方式" class="headerlink" title="滴定方式"></a>滴定方式</h3><ul>
-<li><strong>直接滴定法</strong>：简便快速</li>
-<li><strong>返滴定法</strong>：反应慢&#x2F;固体反应物&#x2F;无合适指示剂</li>
-<li><strong>置换滴定法</strong>：无直接计量关系</li>
-<li><strong>间接滴定法</strong>：不能直接与滴定剂反应</li>
-</ul>
-<h3 id="滴定分析计算"><a href="#滴定分析计算" class="headerlink" title="滴定分析计算"></a>滴定分析计算</h3><ul>
-<li>nA&#x2F;nB &#x3D; a&#x2F;b（化学计量关系）</li>
-<li>cB &#x3D; (a&#x2F;b) x (mA&#x2F;MA) &#x2F; VB</li>
-<li>mA &#x3D; (b&#x2F;a) x cB x VB x MA</li>
-</ul>
-<h3 id="滴定度-T"><a href="#滴定度-T" class="headerlink" title="滴定度 T"></a>滴定度 T</h3><p>T_B&#x2F;A &#x3D; (b&#x2F;a) x cB x MA &#x2F; 1000（mg&#x2F;mL）</p>
-<hr>
-<h2 id="第五章-酸碱平衡"><a href="#第五章-酸碱平衡" class="headerlink" title="第五章 酸碱平衡"></a>第五章 酸碱平衡</h2><h3 id="酸碱质子理论"><a href="#酸碱质子理论" class="headerlink" title="酸碱质子理论"></a>酸碱质子理论</h3><ul>
-<li>酸给出质子，碱接受质子</li>
-<li>Ka × Kb &#x3D; Kw &#x3D; 10^-14（25摄氏度）</li>
-<li>多元酸：Ka1<em>Kb3 &#x3D; Ka2</em>Kb2 &#x3D; Ka3*Kb1 &#x3D; Kw</li>
-</ul>
-<h3 id="pH计算（核心公式）"><a href="#pH计算（核心公式）" class="headerlink" title="pH计算（核心公式）"></a>pH计算（核心公式）</h3><p><strong>强酸强碱</strong>：c &gt; 10^-6 mol&#x2F;L 时 [H⁺] &#x3D; c</p>
-<p><strong>一元弱酸</strong>：</p>
-<ul>
-<li>cKa &gt; 20Kw, c&#x2F;Ka &gt; 500：[H⁺] &#x3D; sqrt(cKa)</li>
-<li>cKa &gt; 20Kw, c&#x2F;Ka &lt; 500：[H⁺]^2 + Ka[H⁺] - cKa &#x3D; 0</li>
-</ul>
-<p><strong>一元弱碱</strong>：类似，用Kb计算[OH⁻]</p>
-<p><strong>两性物质（如NaHCO₃）</strong>：</p>
-<ul>
-<li>cKa2 &gt; 20Kw, c&#x2F;Ka1 &gt; 20：[H⁺] &#x3D; sqrt(Ka1 × Ka2)</li>
-</ul>
-<p><strong>缓冲溶液</strong>：</p>
-<ul>
-<li>pH &#x3D; pKa - lg(ca&#x2F;cb)</li>
-</ul>
-<h3 id="缓冲溶液"><a href="#缓冲溶液" class="headerlink" title="缓冲溶液"></a>缓冲溶液</h3><ul>
-<li>缓冲范围：pH &#x3D; pKa ± 1</li>
-<li>缓冲容量：总浓度越大越强，浓度比1:1时最大</li>
-</ul>
-<hr>
-<h2 id="第六章-酸碱滴定"><a href="#第六章-酸碱滴定" class="headerlink" title="第六章 酸碱滴定"></a>第六章 酸碱滴定</h2><h3 id="滴定突跃"><a href="#滴定突跃" class="headerlink" title="滴定突跃"></a>滴定突跃</h3><ul>
-<li>0.1M NaOH滴定0.1M HCl：pH 4.30 ~ 9.70</li>
-<li>0.1M NaOH滴定0.1M HAc：pH 7.76 ~ 9.70，计量点 pH &#x3D; 8.73</li>
-<li>0.1M HCl滴定0.1M NH₃：pH 6.25 ~ 4.30，计量点 pH &#x3D; 5.28</li>
-</ul>
-<h3 id="强碱滴定弱酸的特点"><a href="#强碱滴定弱酸的特点" class="headerlink" title="强碱滴定弱酸的特点"></a>强碱滴定弱酸的特点</h3><ol>
-<li>起点pH较高（弱酸[H⁺]低）</li>
-<li>计量点前中部较平缓（缓冲溶液）</li>
-<li>计量点pH呈弱碱性（强碱弱酸盐）</li>
-<li>突跃范围较窄</li>
-</ol>
-<h3 id="准确定量条件"><a href="#准确定量条件" class="headerlink" title="准确定量条件"></a>准确定量条件</h3><ul>
-<li>强酸&#x2F;强碱：c &gt;&#x3D; 10^-4 mol&#x2F;L</li>
-<li>弱酸：cKa &gt;&#x3D; 10^-8</li>
-<li>弱碱：cKb &gt;&#x3D; 10^-8</li>
-<li>多元酸分步滴定：Ka1&#x2F;Ka2 &gt;&#x3D; 10^4</li>
-</ul>
-<h3 id="双指示剂法（混合碱分析）"><a href="#双指示剂法（混合碱分析）" class="headerlink" title="双指示剂法（混合碱分析）"></a>双指示剂法（混合碱分析）</h3><ul>
-<li>V1 &gt; V2：NaOH + Na₂CO₃</li>
-<li>V1 &#x3D; V2：Na₂CO₃</li>
-<li>V1 &lt; V2：Na₂CO₃ + NaHCO₃</li>
-<li>V1 &#x3D; 0：NaHCO₃</li>
-<li>V2 &#x3D; 0：NaOH</li>
-</ul>
-<h3 id="常见酸碱指示剂"><a href="#常见酸碱指示剂" class="headerlink" title="常见酸碱指示剂"></a>常见酸碱指示剂</h3><table>
-<thead>
-<tr>
-<th>指示剂</th>
-<th>变色范围(pH)</th>
-<th>颜色变化</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>甲基橙</td>
-<td>3.1 ~ 4.4</td>
-<td>红到黄</td>
-</tr>
-<tr>
-<td>甲基红</td>
-<td>4.4 ~ 6.2</td>
-<td>红到黄</td>
-</tr>
-<tr>
-<td>酚酞</td>
-<td>8.0 ~ 10.0</td>
-<td>无色到红</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="第七章-配位平衡"><a href="#第七章-配位平衡" class="headerlink" title="第七章 配位平衡"></a>第七章 配位平衡</h2><h3 id="EDTA的性质"><a href="#EDTA的性质" class="headerlink" title="EDTA的性质"></a>EDTA的性质</h3><ul>
-<li>六齿配体，六级解离 pKa1-pKa6 &#x3D; 0.9~10.26</li>
-<li>分子式 H₆Y²⁺，常用 Na₂H₂Y</li>
-</ul>
-<h3 id="EDTA的酸效应"><a href="#EDTA的酸效应" class="headerlink" title="EDTA的酸效应"></a>EDTA的酸效应</h3><ul>
-<li>alpha_Y(H) &#x3D; 1 + β₁[H⁺] + β₂[H⁺]^2 + … + β₆[H⁺]^6</li>
-<li>pH下降，alpha_Y(H)上升，[Y⁴⁻]下降</li>
-</ul>
-<h3 id="副反应系数总结"><a href="#副反应系数总结" class="headerlink" title="副反应系数总结"></a>副反应系数总结</h3><ul>
-<li><strong>EDTA的副反应</strong>：alpha_Y &#x3D; alpha_Y(H) + alpha_Y(N) - 1</li>
-<li><strong>金属离子的副反应</strong>：alpha_M &#x3D; alpha_M(L) + alpha_M(OH) - 1</li>
-<li><strong>条件稳定常数</strong>：lgK_MY &#x3D; lgK_MY - lg(alpha_M) - lg(alpha_Y)</li>
-</ul>
-<hr>
-<h2 id="第八章-配位滴定分析法"><a href="#第八章-配位滴定分析法" class="headerlink" title="第八章 配位滴定分析法"></a>第八章 配位滴定分析法</h2><h3 id="滴定曲线"><a href="#滴定曲线" class="headerlink" title="滴定曲线"></a>滴定曲线</h3><ul>
-<li>计量点 pM_sp &#x3D; 1&#x2F;2(lgK_MY + pcM_sp)</li>
-<li>影响突跃因素：cM越大突跃越大；K_MY越大突跃越大</li>
-</ul>
-<h3 id="准确滴定条件"><a href="#准确滴定条件" class="headerlink" title="准确滴定条件"></a>准确滴定条件</h3><ul>
-<li>单一离子：<strong>lg(cM_sp × K_MY) &gt;&#x3D; 6</strong></li>
-<li>cM &#x3D; 0.01 mol&#x2F;L 时，lgK_MY &gt;&#x3D; 8</li>
-</ul>
-<h3 id="林邦误差公式"><a href="#林邦误差公式" class="headerlink" title="林邦误差公式"></a>林邦误差公式</h3><p>TE% &#x3D; (10^ΔpM - 10^(-ΔpM)) &#x2F; sqrt(cM_sp × K_MY) × 100%</p>
-<h3 id="酸度控制"><a href="#酸度控制" class="headerlink" title="酸度控制"></a>酸度控制</h3><ul>
-<li><strong>最高酸度（pH_min）</strong>：lg(alpha_Y(H)) &lt;&#x3D; lgK_MY - 8</li>
-<li><strong>最低酸度（pH_max）</strong>：金属离子不水解</li>
-</ul>
-<h3 id="混合离子滴定"><a href="#混合离子滴定" class="headerlink" title="混合离子滴定"></a>混合离子滴定</h3><ul>
-<li>Δ(lgK) &gt;&#x3D; 6（cM约等于cN 时）可分步滴定</li>
-<li><strong>配位掩蔽</strong>：加入掩蔽剂L降低[N]</li>
-<li><strong>沉淀掩蔽</strong>：生成N的沉淀</li>
-<li><strong>氧化还原掩蔽</strong>：改变N的价态</li>
-</ul>
-<hr>
-<h2 id="第九章-氧化还原平衡（郑义武）"><a href="#第九章-氧化还原平衡（郑义武）" class="headerlink" title="第九章 氧化还原平衡（郑义武）"></a>第九章 氧化还原平衡（郑义武）</h2><h3 id="能斯特方程"><a href="#能斯特方程" class="headerlink" title="能斯特方程"></a>能斯特方程</h3><p>E &#x3D; E_θ_prime + (0.059&#x2F;n)lg(c_Ox&#x2F;c_Red)</p>
-<h3 id="条件电极电位"><a href="#条件电极电位" class="headerlink" title="条件电极电位"></a>条件电极电位</h3><p>E_θ_prime &#x3D; E_θ + (0.059&#x2F;n)lg(γ_Ox × alpha_Red)&#x2F;(γ_Red × alpha_Ox)</p>
-<h3 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h3><ul>
-<li><strong>络合效应</strong>：氧化态形成络合物导致电位降低</li>
-<li><strong>沉淀效应</strong>：氧化态生成沉淀导致电位降低</li>
-<li><strong>酸效应</strong>：H⁺参与反应时影响</li>
-</ul>
-<h3 id="反应完全条件"><a href="#反应完全条件" class="headerlink" title="反应完全条件"></a>反应完全条件</h3><ul>
-<li><strong>ΔE_θ_prime &gt;&#x3D; 0.4V</strong> 可满足滴定分析</li>
-<li>lgK &#x3D; n × ΔE &#x2F; 0.059</li>
-</ul>
-<hr>
-<h2 id="第十章-氧化还原滴定（郑义武）"><a href="#第十章-氧化还原滴定（郑义武）" class="headerlink" title="第十章 氧化还原滴定（郑义武）"></a>第十章 氧化还原滴定（郑义武）</h2><h3 id="滴定曲线（Ce⁴⁺滴定Fe²⁺）"><a href="#滴定曲线（Ce⁴⁺滴定Fe²⁺）" class="headerlink" title="滴定曲线（Ce⁴⁺滴定Fe²⁺）"></a>滴定曲线（Ce⁴⁺滴定Fe²⁺）</h3><ul>
-<li>突跃：0.86V ~ 1.26V</li>
-<li>计量点电位：Esp &#x3D; (n1<em>E1 + n2</em>E2)&#x2F;(n1 + n2) &#x3D; 1.06V</li>
-</ul>
-<h3 id="高锰酸钾法"><a href="#高锰酸钾法" class="headerlink" title="高锰酸钾法"></a>高锰酸钾法</h3><ul>
-<li><strong>强酸性</strong>（pH&lt;&#x3D;1）：E_θ&#x3D;1.51V</li>
-<li>标定基准物：Na₂C₂O₄，条件：~1mol&#x2F;L H₂SO₄、70-85摄氏度</li>
-<li>自身指示剂</li>
-</ul>
-<h3 id="重铬酸钾法"><a href="#重铬酸钾法" class="headerlink" title="重铬酸钾法"></a>重铬酸钾法</h3><ul>
-<li>K₂Cr₂O₇ 纯稳定，可直配</li>
-<li>E_θ &#x3D; 1.33V，用于CODcr测定</li>
-</ul>
-<h3 id="碘量法（重点）"><a href="#碘量法（重点）" class="headerlink" title="碘量法（重点）"></a>碘量法（重点）</h3><ul>
-<li><strong>直接碘量法</strong>：I2滴定还原性物质（pH&lt;9）</li>
-<li><strong>间接碘量法</strong>：Na₂S₂O₃滴定I₂（测氧化性物质）</li>
-<li>反应：I2 + 2S₂O₃²⁻ 变成 2I⁻ + S₄O₆²⁻</li>
-<li>淀粉指示剂终点：蓝色消失</li>
-</ul>
-<hr>
-<h2 id="第十一章-沉淀平衡与银量法（郑义武）"><a href="#第十一章-沉淀平衡与银量法（郑义武）" class="headerlink" title="第十一章 沉淀平衡与银量法（郑义武）"></a>第十一章 沉淀平衡与银量法（郑义武）</h2><h3 id="溶解度与溶度积"><a href="#溶解度与溶度积" class="headerlink" title="溶解度与溶度积"></a>溶解度与溶度积</h3><ul>
-<li>Ksp &#x3D; [M⁺][A⁻]</li>
-<li>条件溶度积：K_sp &#x3D; Ksp × alpha_M × alpha_A</li>
-<li>S &#x3D; sqrt(Ksp × alpha_M × alpha_A)</li>
-</ul>
-<h3 id="影响沉淀溶解度的因素"><a href="#影响沉淀溶解度的因素" class="headerlink" title="影响沉淀溶解度的因素"></a>影响沉淀溶解度的因素</h3><ul>
-<li>同离子效应：溶解度下降</li>
-<li>盐效应：溶解度上升</li>
-<li>酸效应：溶解度上升</li>
-<li>配位效应：溶解度上升</li>
-</ul>
-<h3 id="银量法"><a href="#银量法" class="headerlink" title="银量法"></a>银量法</h3><table>
-<thead>
-<tr>
-<th>方法</th>
-<th>指示剂</th>
-<th>pH条件</th>
-<th>滴定剂</th>
-<th>测定对象</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>莫尔法</td>
-<td>K₂CrO₄</td>
-<td>6.5~10.5</td>
-<td>AgNO₃</td>
-<td>Cl⁻, Br⁻, CN⁻</td>
-</tr>
-<tr>
-<td>福尔哈德法</td>
-<td>铁铵矾</td>
-<td>0.3M HNO₃</td>
-<td>NH₄SCN</td>
-<td>Ag⁺, Cl⁻, Br⁻, I⁻, SCN⁻</td>
-</tr>
-<tr>
-<td>法扬斯法</td>
-<td>吸附指示剂</td>
-<td>依pKa定</td>
-<td>AgNO₃</td>
-<td>Cl⁻, Br⁻, I⁻, SCN⁻</td>
-</tr>
-</tbody></table>
-<p><strong>莫尔法</strong>：终点Ag₂CrO₄砖红色；测Cl⁻需充分振摇<br><strong>福尔哈德法</strong>：测Cl⁻需加硝基苯防AgCl转化为AgSCN（否则偏低）<br><strong>法扬斯法</strong>：吸附指示剂，pH &gt; pKa</p>
-<hr>
-<h2 id="重量分析法（郑义武）"><a href="#重量分析法（郑义武）" class="headerlink" title="重量分析法（郑义武）"></a>重量分析法（郑义武）</h2><h3 id="沉淀类型"><a href="#沉淀类型" class="headerlink" title="沉淀类型"></a>沉淀类型</h3><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>颗粒直径</th>
-<th>实例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>晶形沉淀</td>
-<td>0.1~1um</td>
-<td>BaSO₄</td>
-</tr>
-<tr>
-<td>凝乳状沉淀</td>
-<td>0.02~1um</td>
-<td>AgCl</td>
-</tr>
-<tr>
-<td>无定形沉淀</td>
-<td>&lt;0.02um</td>
-<td>Fe₂O₃·nH₂O</td>
-</tr>
-</tbody></table>
-<h3 id="沉淀纯度影响因素"><a href="#沉淀纯度影响因素" class="headerlink" title="沉淀纯度影响因素"></a>沉淀纯度影响因素</h3><ul>
-<li><strong>共沉淀</strong>：表面吸附、混晶、吸留包夹</li>
-<li><strong>后沉淀</strong>：缩短沉淀与母液共置时间</li>
-</ul>
-<h3 id="沉淀条件选择"><a href="#沉淀条件选择" class="headerlink" title="沉淀条件选择"></a>沉淀条件选择</h3><ul>
-<li><strong>晶形沉淀</strong>：稀、热、慢、搅、陈化</li>
-<li><strong>无定形沉淀</strong>：热、浓、快、搅、加电解质、立即过滤</li>
-</ul>
-<hr>
-<h2 id="核心考点总结"><a href="#核心考点总结" class="headerlink" title="核心考点总结"></a>核心考点总结</h2><ol>
-<li><strong>分析方法分类</strong>（常量&#x2F;微量&#x2F;痕量）</li>
-<li><strong>误差与数据处理</strong>（系统误差&#x2F;偶然误差、有效数字修约与运算、t检验&#x2F;F检验&#x2F;Q检验）</li>
-<li><strong>pH计算</strong>（强酸&#x2F;弱酸&#x2F;缓冲溶液&#x2F;两性物质）</li>
-<li><strong>酸碱滴定</strong>（滴定曲线、突跃、指示剂选择、准确滴定条件）</li>
-<li><strong>配位滴定</strong>（EDTA特性、副反应系数、条件稳定常数、酸效应曲线、林邦误差）</li>
-<li><strong>氧化还原滴定</strong>（条件电位、Ce⁴⁺滴定Fe²⁺曲线、KMnO₄法、碘量法）</li>
-<li><strong>沉淀滴定</strong>（莫尔法&#x2F;福尔哈德法&#x2F;法扬斯法）</li>
-<li><strong>重量分析法</strong>（沉淀形成条件、共沉淀与后沉淀）</li>
-</ol>
-<blockquote>
-<p>总结生成日期：2026年6月18日<br>资料来源：中山大学药学院（深圳）分析化学课程课件（李浩 &amp; 郑义武）<br>共涵盖26份PDF课件，完整知识体系</p>
-</blockquote>
+                
 
-      
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">
+                            分析化学期末复习指南
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            <p>期末复习最怕资料堆在一起却不知道先看哪里，所以我把分析化学的高频考点整理成了一个更适合考前快速翻阅的复习网站。它不是完整教材替代品，而是一份面向考试场景的速查指南：先帮你抓住题型，再把常见判断、公式、误差分析和计算题步骤压缩到同一页里。</p>
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Mon Jul 06 2026 17:25:53 GMT+0800">
+                
+                    2026-07-06
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/">分析化学</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">期末复习</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E8%8D%AF%E5%AD%A6/">药学</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" data-id="cmr68k5ey00001os0339ebxz8" data-title="分析化学课程知识总结" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/" rel="tag">分析化学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%8D%AF%E7%89%A9%E5%88%86%E6%9E%90/" rel="tag">药物分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" rel="tag">课程总结</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
+    <a href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">Read more<span class="seo-reader-text">分析化学期末复习指南</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-
-
-  
-    <article id="post-有机化学期末复习手册" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/" class="article-date">
-  <time class="dt-published" datetime="2026-07-04T09:49:41.000Z" itemprop="datePublished">2026-07-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+                </div>
+            </li>
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/">有机化学期末复习手册</a>
-    </h1>
-  
+            <li class="home-article-item">
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>基于课程课件与上届考试回忆整理 | 重点突出、题型对位、方便速查</p>
-</blockquote>
-<hr>
-<h2 id="第一部分：题型速览与分值分布"><a href="#第一部分：题型速览与分值分布" class="headerlink" title="第一部分：题型速览与分值分布"></a>第一部分：题型速览与分值分布</h2><table>
-<thead>
-<tr>
-<th>题型</th>
-<th>题数</th>
-<th>考察重点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>命名题</td>
-<td>5</td>
-<td>烯烃顺反异构(E&#x2F;Z)、环烷烃、名称写结构、Fischer投影式</td>
-</tr>
-<tr>
-<td>选择题</td>
-<td>12</td>
-<td>光谱、稳定性排序、芳香性、萜类、人名反应</td>
-</tr>
-<tr>
-<td>判断题</td>
-<td>6</td>
-<td>SN2动力学与立体化学、糖类、蛋白质手性</td>
-</tr>
-<tr>
-<td>反应题</td>
-<td>11</td>
-<td>各类官能团的典型反应，含立体化学</td>
-</tr>
-<tr>
-<td>鉴别题</td>
-<td>1</td>
-<td>醇、酮的化学鉴别</td>
-</tr>
-<tr>
-<td>结构推断</td>
-<td>1</td>
-<td>化学法（KMnO₄氧化、碘仿反应）</td>
-</tr>
-<tr>
-<td>机理题</td>
-<td>1</td>
-<td>频哪醇重排（必考）</td>
-</tr>
-<tr>
-<td>合成题</td>
-<td>2</td>
-<td>多步合成设计</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>第1-11章是复习重点，12-13章考得少，14-15章反而考更多。前面章节（1-9）考得比较细。</p>
-</blockquote>
-<hr>
-<h2 id="第二部分：命名专题（5道）"><a href="#第二部分：命名专题（5道）" class="headerlink" title="第二部分：命名专题（5道）"></a>第二部分：命名专题（5道）</h2><h3 id="2-1-烯烃顺反异构命名（E-Z标记法）"><a href="#2-1-烯烃顺反异构命名（E-Z标记法）" class="headerlink" title="2.1 烯烃顺反异构命名（E&#x2F;Z标记法）"></a>2.1 烯烃顺反异构命名（E&#x2F;Z标记法）</h3><p><strong>步骤：</strong></p>
-<ol>
-<li>选母体——含双键的最长碳链</li>
-<li>编号——靠近双键一端</li>
-<li>标记构型——次序规则比较双键两端基团</li>
-</ol>
-<p><strong>次序规则要点：</strong></p>
-<ul>
-<li>原子序数大者优先：I &gt; Br &gt; Cl &gt; F &gt; O &gt; N &gt; C &gt; H</li>
-<li>相同原子时向外逐层比较</li>
-<li>双键&#x2F;三键视为连接两个&#x2F;三个相同原子</li>
-</ul>
-<p><strong>Z&#x2F;E判断：</strong></p>
-<ul>
-<li>两个优先基团在双键同侧 → Z型（Zusammen）</li>
-<li>两个优先基团在双键异侧 → E型（Entgegen）</li>
-</ul>
-<h3 id="2-2-环烷烃命名"><a href="#2-2-环烷烃命名" class="headerlink" title="2.2 环烷烃命名"></a>2.2 环烷烃命名</h3><ul>
-<li>以”环某烷”为母体</li>
-<li>取代基位次之和最小</li>
-<li>有顺反异构时用顺&#x2F;反或R,S标记</li>
-<li>桥环命名：从桥头开始编号，写”某环[x.y.z]某烷”</li>
-</ul>
-<h3 id="2-3-根据名称写结构"><a href="#2-3-根据名称写结构" class="headerlink" title="2.3 根据名称写结构"></a>2.3 根据名称写结构</h3><p>关键：准确理解母体、取代基位置和构型标记。</p>
-<h3 id="2-4-Fischer投影式写法"><a href="#2-4-Fischer投影式写法" class="headerlink" title="2.4 Fischer投影式写法"></a>2.4 Fischer投影式写法</h3><p><strong>规则：</strong></p>
-<ul>
-<li>竖线朝后（纸内），横线朝前（纸外）</li>
-<li>最小基团（通常H）朝后时：顺时针&#x3D;R，逆时针&#x3D;S</li>
-<li>交换两个基团一次 → 构型翻转；交换两次 → 恢复</li>
-</ul>
-<h2 id="第三部分：选择题核心知识点（12道）"><a href="#第三部分：选择题核心知识点（12道）" class="headerlink" title="第三部分：选择题核心知识点（12道）"></a>第三部分：选择题核心知识点（12道）</h2><h3 id="3-1-核磁共振氢谱可提供的信息"><a href="#3-1-核磁共振氢谱可提供的信息" class="headerlink" title="3.1 核磁共振氢谱可提供的信息"></a>3.1 核磁共振氢谱可提供的信息</h3><table>
-<thead>
-<tr>
-<th>信息</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>化学位移(d)</td>
-<td>质子化学环境（烷基、烯基、醛基、羧基等）</td>
-</tr>
-<tr>
-<td>积分曲线（峰面积）</td>
-<td>各类质子的相对数目</td>
-</tr>
-<tr>
-<td>裂分（n+1规律）</td>
-<td>相邻质子数目</td>
-</tr>
-<tr>
-<td>峰形</td>
-<td>活泼氢（OH、NH、COOH）峰宽而矮</td>
-</tr>
-</tbody></table>
-<p><strong>常见化学位移范围：</strong></p>
-<ul>
-<li>R-CH₃: 0.9-1.8 ppm</li>
-<li>R2CH₂: 1.2-1.4 ppm</li>
-<li>R3CH: 1.4-1.7 ppm</li>
-<li>Ar-H: 6.5-8.5 ppm</li>
-<li>&#x3D;C-H: 4.5-6.5 ppm</li>
-<li>≡C-H: 2.0-3.0 ppm</li>
-<li>O&#x3D;C-H: 9-10 ppm</li>
-<li>COOH: 10-13 ppm（宽峰）</li>
-<li>O-H: 0.5-5.5 ppm（宽峰，可交换）</li>
-</ul>
-<h3 id="3-2-碳正离子稳定性排序"><a href="#3-2-碳正离子稳定性排序" class="headerlink" title="3.2 碳正离子稳定性排序"></a>3.2 碳正离子稳定性排序</h3><p><strong>稳定性：</strong> 叔C+ &gt; 仲C+ &gt; 伯C+ &gt; 甲基C+ &gt; 乙烯基&#x2F;苯基C+</p>
-<p><strong>解释：</strong> 烷基的+I效应和s-p超共轭稳定化。特别稳定的是烯丙基型（CH₂&#x3D;CH-CH₂+）和苄基型（Ph-CH₂+），因p-p共轭。特别不稳定的是乙烯基碳正离子（sp杂化）。</p>
-<h3 id="3-3-硝基取代苯酚的酸性排序"><a href="#3-3-硝基取代苯酚的酸性排序" class="headerlink" title="3.3 硝基取代苯酚的酸性排序"></a>3.3 硝基取代苯酚的酸性排序</h3><p><strong>酸性：</strong> 2,4,6-三硝基苯酚 &gt; 2,4-二硝基苯酚 &gt; 对硝基苯酚 ≈ 邻硝基苯酚 &gt; 间硝基苯酚 &gt; 苯酚</p>
-<p><strong>解释：</strong> 硝基为强吸电子基（-I, -C），增强酚羟基O-H极性，更容易解离H+。硝基在邻对位时可参与共轭稳定酚负离子。</p>
-<h3 id="3-4-亲核性排序"><a href="#3-4-亲核性排序" class="headerlink" title="3.4 亲核性排序"></a>3.4 亲核性排序</h3><ul>
-<li>同一周期：亲核性与碱性大致平行（C &gt; N &gt; O &gt; F）</li>
-<li>同一主族：随原子半径增大而增强（I- &gt; Br- &gt; Cl- &gt; F-）</li>
-<li>极性质子溶剂中：HS- &gt; I- &gt; CN- &gt; OH- &gt; CH₃COO- &gt; Cl- &gt; F- &gt; NO3-</li>
-<li>亲核性和碱性不完全平行（受可极化性、溶剂、位阻影响）</li>
-<li>位阻大的亲核试剂亲核性减弱</li>
-</ul>
-<h3 id="3-5-胺的碱性排序"><a href="#3-5-胺的碱性排序" class="headerlink" title="3.5 胺的碱性排序"></a>3.5 胺的碱性排序</h3><p><strong>一般：</strong> 脂肪胺 &gt; 氨 &gt; 芳香胺</p>
-<p>水溶液中典型顺序：(CH₃)2NH &gt; CH₃NH₂ &gt; (CH₃)3N &gt; NH₃ &gt; PhNH₂<br>（受溶剂化效应和诱导效应共同影响）</p>
-<p><strong>取代苯胺碱性：</strong> 给电子基（-CH₃）增强碱性；吸电子基（-NO₂）减弱碱性</p>
-<h3 id="3-6-休克尔规则判断芳香性"><a href="#3-6-休克尔规则判断芳香性" class="headerlink" title="3.6 休克尔规则判断芳香性"></a>3.6 休克尔规则判断芳香性</h3><p><strong>4n+2规则：</strong> 平面环状共轭体系中 p电子数 &#x3D; 4n+2 时具芳香性</p>
-<p><strong>必要条件：</strong></p>
-<ol>
-<li>环状闭合共轭体系</li>
-<li>平面结构</li>
-<li>p电子数 &#x3D; 4n+2</li>
-</ol>
-<p><strong>典型例子：</strong></p>
-<ul>
-<li>苯（6e-, n&#x3D;1）：芳香性</li>
-<li>吡啶（6e-，N提供1个）：芳香性</li>
-<li>吡咯（6e-，N提供孤对2个）：芳香性</li>
-<li>呋喃、噻吩（同吡咯）：芳香性</li>
-<li>环丁二烯（4e-）：反芳香性</li>
-<li>环戊二烯负离子（6e-）：芳香性</li>
-<li>环辛四烯（8e-，非平面）：无芳香性</li>
-</ul>
-<h3 id="3-7-黄鸣龙反应"><a href="#3-7-黄鸣龙反应" class="headerlink" title="3.7 黄鸣龙反应"></a>3.7 黄鸣龙反应</h3><p><strong>定义：</strong> 黄鸣龙改良的Wolff-Kishner还原。醛&#x2F;酮+NH₂NH₂生成腙，再加KOH&#x2F;NaOH在高沸点溶剂（二甘醇）中加热，将C&#x3D;O还原为CH₂。</p>
-<p><strong>条件：</strong> 醛&#x2F;酮 + NH₂NH₂ + KOH + 高沸点溶剂，加热<br><strong>产物：</strong> C&#x3D;O → CH₂</p>
-<p><strong>对比：</strong> Clemmensen还原（Zn&#x2F;Hg, HCl）也为C&#x3D;O → CH₂，但用于对酸稳定的化合物。</p>
-<h3 id="3-8-某分子是几萜"><a href="#3-8-某分子是几萜" class="headerlink" title="3.8 某分子是几萜"></a>3.8 某分子是几萜</h3><p><strong>异戊二烯规则：</strong> 萜类由异戊二烯单元（C5H8）头尾相连而成。</p>
-<p><strong>分类：</strong></p>
-<ul>
-<li>单萜（C10, 2单元）：薄荷醇、樟脑、蒎烯</li>
-<li>倍半萜（C15, 3单元）：青蒿素</li>
-<li>二萜（C20, 4单元）：维生素A</li>
-<li>三萜（C30, 6单元）：鲨烯、皂苷</li>
-<li>四萜（C40, 8单元）：β-胡萝卜素</li>
-</ul>
-<p><strong>判断方法：</strong> 碳原子数&#x2F;5 &#x3D; 异戊二烯单元数</p>
-<hr>
-<h2 id="第四部分：判断题高频考点（6道）"><a href="#第四部分：判断题高频考点（6道）" class="headerlink" title="第四部分：判断题高频考点（6道）"></a>第四部分：判断题高频考点（6道）</h2><h3 id="4-1-SN2反应"><a href="#4-1-SN2反应" class="headerlink" title="4.1 SN2反应"></a>4.1 SN2反应</h3><ul>
-<li><strong>几级反应：</strong> 二级反应（v &#x3D; k[RX][Nu-]）</li>
-<li><strong>分几步：</strong> 一步（协同过程，无中间体）</li>
-<li><strong>立体化学：</strong> Walden翻转（构型完全翻转，亲核试剂从背面进攻）</li>
-</ul>
-<p>SN2特征：伯卤代烃最易发生；极性非质子溶剂（DMSO、DMF）有利；产物构型完全翻转。</p>
-<h3 id="4-2-单糖是否都是还原糖"><a href="#4-2-单糖是否都是还原糖" class="headerlink" title="4.2 单糖是否都是还原糖"></a>4.2 单糖是否都是还原糖</h3><p><strong>需看具体问法：</strong></p>
-<ul>
-<li>单糖都有游离的半缩醛羟基 → 单糖都是还原糖 ✓</li>
-<li>但二糖中蔗糖为非还原糖（两个异头碳均参与成苷）</li>
-<li>麦芽糖、乳糖、纤维二糖均为还原糖</li>
-</ul>
-<h3 id="4-3-蛋白质是否都有手性"><a href="#4-3-蛋白质是否都有手性" class="headerlink" title="4.3 蛋白质是否都有手性"></a>4.3 蛋白质是否都有手性</h3><p><strong>错。</strong> 组成蛋白质的20种α-氨基酸中，甘氨酸（NH₂CH₂COOH）的α-碳连有两个H，是非手性的。</p>
-<hr>
-<h2 id="第五部分：反应题全梳理（11道）"><a href="#第五部分：反应题全梳理（11道）" class="headerlink" title="第五部分：反应题全梳理（11道）"></a>第五部分：反应题全梳理（11道）</h2><h3 id="5-1-烯烃臭氧化"><a href="#5-1-烯烃臭氧化" class="headerlink" title="5.1 烯烃臭氧化"></a>5.1 烯烃臭氧化</h3><p><strong>试剂：</strong> O3，后经Zn&#x2F;H₂O或CH₃SCH₃还原处理<br><strong>产物（取决于双键取代模式）：</strong></p>
-<ul>
-<li>RCH&#x3D;CH₂ → RCHO + HCHO</li>
-<li>RCH&#x3D;CHR’ → RCHO + R’CHO</li>
-<li>RR’C&#x3D;CH₂ → RR’C&#x3D;O + HCHO</li>
-<li>RR’C&#x3D;CR’’R’’’ → RR’C&#x3D;O + R’’R’’’C&#x3D;O</li>
-</ul>
-<p>注意：若用H₂O₂后处理，醛被氧化为羧酸。</p>
-<h3 id="5-2-炔烃用Lindlar催化剂催化氢化"><a href="#5-2-炔烃用Lindlar催化剂催化氢化" class="headerlink" title="5.2 炔烃用Lindlar催化剂催化氢化"></a>5.2 炔烃用Lindlar催化剂催化氢化</h3><p><strong>试剂：</strong> H₂&#x2F;Lindlar催化剂（Pd&#x2F;CaCO3 + Pb(OAc)2或喹啉毒化）<br><strong>产物：</strong> 顺式烯烃（立体专一性，顺式加成）</p>
-<p>对比：Na&#x2F;NH₃(l)还原炔烃得到反式烯烃。</p>
-<h3 id="5-3-炔钠-卤代烃"><a href="#5-3-炔钠-卤代烃" class="headerlink" title="5.3 炔钠+卤代烃"></a>5.3 炔钠+卤代烃</h3><p><strong>反应：</strong> 末端炔烃 + NaNH₂&#x2F;NH₃(l) → 炔基钠 + R-Br(伯) → 内炔<br><strong>用途：</strong> 增长碳链。只能用伯卤代烷（仲&#x2F;叔易消除）。</p>
-<h3 id="5-4-卤代环己烷消除（反式共平面，E2）"><a href="#5-4-卤代环己烷消除（反式共平面，E2）" class="headerlink" title="5.4 卤代环己烷消除（反式共平面，E2）"></a>5.4 卤代环己烷消除（反式共平面，E2）</h3><p><strong>关键：</strong> β-H和离去基团必须反式共平面（anti-periplanar）</p>
-<ul>
-<li>强碱（KOH&#x2F;EtOH, NaOC2H5, t-BuOK）</li>
-<li>大基团（如Br）处于a键更容易消除</li>
-<li>产物一般为查依采夫产物（多取代烯烃）</li>
-</ul>
-<h3 id="5-5-醇的KMnO₄氧化"><a href="#5-5-醇的KMnO₄氧化" class="headerlink" title="5.5 醇的KMnO₄氧化"></a>5.5 醇的KMnO₄氧化</h3><ul>
-<li><strong>伯醇（RCH₂OH）：</strong> KMnO₄&#x2F;H+, △ → 羧酸（RCOOH）</li>
-<li><strong>仲醇（R2CHOH）：</strong> KMnO₄&#x2F;H+, △ → 酮（R2C&#x3D;O）</li>
-<li><strong>叔醇（R3COH）：</strong> 不反应</li>
-</ul>
-<h3 id="5-6-环氧化物开环（立体化学）"><a href="#5-6-环氧化物开环（立体化学）" class="headerlink" title="5.6 环氧化物开环（立体化学）"></a>5.6 环氧化物开环（立体化学）</h3><p><strong>碱性条件（SN2）：</strong> 亲核试剂进攻取代较少的环氧碳<br><strong>酸性条件（SN1-like）：</strong> 先质子化，亲核试剂进攻取代较多的环氧碳<br><strong>立体化学：</strong> 反式开环（Walden翻转）</p>
-<ul>
-<li>亲核试剂从背面进攻，构型翻转</li>
-<li>最终产物两个OH在反式位置</li>
-</ul>
-<h3 id="5-7-羟醛缩合"><a href="#5-7-羟醛缩合" class="headerlink" title="5.7 羟醛缩合"></a>5.7 羟醛缩合</h3><p><strong>定义：</strong> 含a-H的醛或酮在酸&#x2F;碱催化下缩合生成b-羟基醛（酮）<br><strong>碱催化机理：</strong> ①碱夺a-H生成烯醇负离子 ②进攻另一分子C&#x3D;O ③质子化<br><strong>加热脱水：</strong> 生成a,β-不饱和醛（酮）</p>
-<h3 id="5-8-黄鸣龙反应"><a href="#5-8-黄鸣龙反应" class="headerlink" title="5.8 黄鸣龙反应"></a>5.8 黄鸣龙反应</h3><p>C&#x3D;O + NH₂NH₂ → 腙 → KOH&#x2F;二甘醇加热 → CH₂（放出N2）<br>与Clemmensen还原（Zn&#x2F;Hg, HCl）同为C&#x3D;O→CH₂的还原方法。</p>
-<h3 id="5-9-酮-LiAlH₄"><a href="#5-9-酮-LiAlH₄" class="headerlink" title="5.9 酮+LiAlH₄"></a>5.9 酮+LiAlH₄</h3><p><strong>产物：</strong> 酮 → 仲醇（R2C&#x3D;O → R2CHOH）<br>LiAlH₄可还原：醛→伯醇，酮→仲醇，羧酸→伯醇，酯→2个伯醇，酰胺→胺<br>注意：LiAlH₄不还原C&#x3D;C；NaBH₄更温和（仅还原醛酮）。</p>
-<h3 id="5-10-Wittig反应（立体化学）"><a href="#5-10-Wittig反应（立体化学）" class="headerlink" title="5.10 Wittig反应（立体化学）"></a>5.10 Wittig反应（立体化学）</h3><p><strong>试剂：</strong> 磷叶立德（Ph3P&#x3D;CRR’）<br><strong>反应：</strong> 醛&#x2F;酮 + 叶立德 → 烯烃 + Ph3P&#x3D;O<br><strong>立体化学：</strong></p>
-<ul>
-<li>稳定叶立德（含吸电子基）→ 主要得反式(E)烯烃</li>
-<li>不稳定叶立德（烷基取代）→ 主要得顺式(Z)烯烃</li>
-</ul>
-<h3 id="5-11-a-β-不饱和醛酮-铜锂试剂"><a href="#5-11-a-β-不饱和醛酮-铜锂试剂" class="headerlink" title="5.11 a,β-不饱和醛酮+铜锂试剂"></a>5.11 a,β-不饱和醛酮+铜锂试剂</h3><p><strong>试剂：</strong> R2CuLi（Gilman试剂，二烃基铜锂）<br><strong>反应：</strong> 1,4-共轭加成（迈克尔加成）<br><strong>产物：</strong> R基加到b-碳<br>对比：格氏试剂（RMgX）倾向1,2-加成（直接加C&#x3D;O）</p>
-<hr>
-<h2 id="第六部分：鉴别题思路"><a href="#第六部分：鉴别题思路" class="headerlink" title="第六部分：鉴别题思路"></a>第六部分：鉴别题思路</h2><h3 id="典型题型：鉴别1-丙醇、异丙醇、丙酮"><a href="#典型题型：鉴别1-丙醇、异丙醇、丙酮" class="headerlink" title="典型题型：鉴别1-丙醇、异丙醇、丙酮"></a>典型题型：鉴别1-丙醇、异丙醇、丙酮</h3><p><strong>碘仿反应 + Lucas试剂法：</strong></p>
-<table>
-<thead>
-<tr>
-<th>第一步试剂</th>
-<th>现象</th>
-<th>初判物质</th>
-<th>第二步操作</th>
-<th>第二步现象</th>
-<th>最终判定</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$\boldsymbol{I_2&#x2F;NaOH}$（碘仿反应）</td>
-<td>黄色沉淀</td>
-<td>丙酮&#x2F;异丙醇</td>
-<td>Lucas试剂（浓$\boldsymbol{HCl&#x2F;ZnCl_2}$）</td>
-<td>数分钟浑浊</td>
-<td>异丙醇</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>立刻分层浑浊</td>
-<td>叔醇（本题无）</td>
-</tr>
-<tr>
-<td></td>
-<td>无黄色沉淀</td>
-<td>1-丙醇</td>
-<td>—</td>
-<td>—</td>
-<td>1-丙醇</td>
-</tr>
-</tbody></table>
-<p><strong>结论：</strong></p>
-<ol>
-<li>丙酮 + I2&#x2F;NaOH → 黄色沉淀（碘仿）</li>
-<li>异丙醇 + I2&#x2F;NaOH → 黄色沉淀（碘仿），+ Lucas → 数分钟浑浊</li>
-<li>1-丙醇 + I2&#x2F;NaOH → 无沉淀，+ Lucas → 不反应</li>
-</ol>
-<h3 id="常见鉴别反应汇总"><a href="#常见鉴别反应汇总" class="headerlink" title="常见鉴别反应汇总"></a>常见鉴别反应汇总</h3><table>
-<thead>
-<tr>
-<th>鉴别对象</th>
-<th>试剂</th>
-<th>现象</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>醛</td>
-<td>Tollens（银氨溶液）</td>
-<td>银镜</td>
-</tr>
-<tr>
-<td>醛&#x2F;酮</td>
-<td>2,4-二硝基苯肼</td>
-<td>黄色&#x2F;橙色沉淀</td>
-</tr>
-<tr>
-<td>甲基酮&#x2F;甲基仲醇</td>
-<td>I2&#x2F;NaOH</td>
-<td>黄色沉淀（碘仿CHI3）</td>
-</tr>
-<tr>
-<td>末端炔烃</td>
-<td>Ag(NH₃)2NO3</td>
-<td>白色沉淀（炔银）</td>
-</tr>
-<tr>
-<td>末端炔烃</td>
-<td>Cu(NH₃)2Cl</td>
-<td>红棕色沉淀（炔亚铜）</td>
-</tr>
-<tr>
-<td>烯烃&#x2F;炔烃</td>
-<td>Br2&#x2F;CCl4</td>
-<td>红棕色褪去</td>
-</tr>
-<tr>
-<td>伯&#x2F;仲&#x2F;叔醇</td>
-<td>Lucas试剂（浓HCl&#x2F;ZnCl2）</td>
-<td>叔醇立即浑浊；仲醇数分钟；伯醇不反应</td>
-</tr>
-<tr>
-<td>伯&#x2F;仲&#x2F;叔胺</td>
-<td>Hinsberg（苯磺酰氯+NaOH）</td>
-<td>伯胺→可溶；仲胺→不溶固体；叔胺不反应</td>
-</tr>
-<tr>
-<td>酚</td>
-<td>FeCl3溶液</td>
-<td>紫&#x2F;蓝&#x2F;绿色</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="第七部分：结构推断（波谱-化学法）"><a href="#第七部分：结构推断（波谱-化学法）" class="headerlink" title="第七部分：结构推断（波谱+化学法）"></a>第七部分：结构推断（波谱+化学法）</h2><h3 id="7-1-KMnO₄氧化双键"><a href="#7-1-KMnO₄氧化双键" class="headerlink" title="7.1 KMnO₄氧化双键"></a>7.1 KMnO₄氧化双键</h3><table>
-<thead>
-<tr>
-<th>双键类型</th>
-<th>酸性KMnO₄氧化产物</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>RCH&#x3D;CH₂</td>
-<td>RCOOH + CO₂</td>
-</tr>
-<tr>
-<td>RCH&#x3D;CHR’</td>
-<td>RCOOH + R’COOH</td>
-</tr>
-<tr>
-<td>RR’C&#x3D;CH₂</td>
-<td>RR’C&#x3D;O + CO₂</td>
-</tr>
-<tr>
-<td>RR’C&#x3D;CR’’R’’’</td>
-<td>RR’C&#x3D;O + R’’R’’’C&#x3D;O</td>
-</tr>
-</tbody></table>
-<p>通过氧化产物可反推双键位置和取代模式。</p>
-<h3 id="7-2-碘仿反应"><a href="#7-2-碘仿反应" class="headerlink" title="7.2 碘仿反应"></a>7.2 碘仿反应</h3><p><strong>正反应的底物：</strong> 甲基酮（CH₃CO-）或甲基仲醇（CH₃CH(OH)-）<br><strong>产物：</strong> 黄色沉淀碘仿（CHI3）+ 羧酸盐</p>
-<h3 id="7-3-综合推断示例"><a href="#7-3-综合推断示例" class="headerlink" title="7.3 综合推断示例"></a>7.3 综合推断示例</h3><p>已知分子式为C6H10O的化合物，经酸性KMnO₄氧化得CH₃COOH和CH₃CH₂COOH，且能发生碘仿反应。</p>
-<p><strong>分析：</strong></p>
-<ol>
-<li>KMnO₄氧化得C2和C3羧酸 → 说明有C&#x3D;C，分别在双键两侧产生C2和C3片段</li>
-<li>碘仿反应 → 有CH₃CO-或CH₃CH(OH)-结构</li>
-<li>不饱和度：(2*6+2-10)&#x2F;2 &#x3D; 2（一个C&#x3D;O和一个C&#x3D;C）</li>
-</ol>
-<p><strong>结论：</strong> CH₃COCH&#x3D;CHCH₂CH₃（3-己烯-2-酮等可能结构）</p>
-<hr>
-<h2 id="第八部分：机理题——频哪醇重排"><a href="#第八部分：机理题——频哪醇重排" class="headerlink" title="第八部分：机理题——频哪醇重排"></a>第八部分：机理题——频哪醇重排</h2><h3 id="反应定义"><a href="#反应定义" class="headerlink" title="反应定义"></a>反应定义</h3><p><strong>频哪醇（Pinacol）：</strong> (CH₃)2C(OH)-C(OH)(CH₃)2<br><strong>频哪醇重排：</strong> 邻二醇在酸催化下重排生成频哪酮（3,3-二甲基-2-丁酮）</p>
-<h3 id="基团迁移规律（必记！）"><a href="#基团迁移规律（必记！）" class="headerlink" title="基团迁移规律（必记！）"></a>基团迁移规律（必记！）</h3><p><strong>迁移能力：芳基 &gt; H &gt; 烷基（叔 &gt; 仲 &gt; 伯 &gt; CH₃）</strong></p>
-<h3 id="对称-vs-不对称邻二醇"><a href="#对称-vs-不对称邻二醇" class="headerlink" title="对称 vs 不对称邻二醇"></a>对称 vs 不对称邻二醇</h3><ul>
-<li>对称：只生成一种酮</li>
-<li>不对称：主要产物由迁移能力强的基团决定</li>
-</ul>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>(CH₃)2C(OH)-C(OH)(CH₃)2 –H₂SO₄,△-→ (CH₃)3C–C(&#x3D;O)CH₃（频哪酮）</p>
-<hr>
-<h2 id="第九部分：合成题策略"><a href="#第九部分：合成题策略" class="headerlink" title="第九部分：合成题策略"></a>第九部分：合成题策略</h2><h3 id="9-1-苯环上多步取代——定位规律"><a href="#9-1-苯环上多步取代——定位规律" class="headerlink" title="9.1 苯环上多步取代——定位规律"></a>9.1 苯环上多步取代——定位规律</h3><p><strong>邻对位致活基：</strong> -OH, -OR, -NH₂, -NHR, -R, -Ar<br><strong>邻对位致钝基：</strong> -Cl, -Br, -I（弱钝化）<br><strong>间位致钝基：</strong> -NO₂, -CN, -COOR, -CHO, -COOH, -CF3, -SO3H</p>
-<p><strong>合成顺序原则：</strong></p>
-<ul>
-<li>先上致钝基，后上致活基</li>
-<li>利用磺化反应（可逆）保护位置</li>
-<li>利用重氮化反应引入-OH, -Cl, -Br, -I, -CN, -H等</li>
-<li>硝基还原为氨基后再进行重氮化转换</li>
-</ul>
-<h3 id="9-2-常见题型：合成三溴苯"><a href="#9-2-常见题型：合成三溴苯" class="headerlink" title="9.2 常见题型：合成三溴苯"></a>9.2 常见题型：合成三溴苯</h3><p>若合成1,2,3-三溴苯（或类似多取代苯），关键在于利用定位基的顺序控制：</p>
-<ol>
-<li>先通过硝基（间位致钝）控制一个Br进入特定位置</li>
-<li>还原NO₂为NH₂</li>
-<li>重氮化后用CuBr&#x2F;HBr引入另一个Br</li>
-<li>再用Br2&#x2F;FeBr3进行最后一步取代</li>
-</ol>
-<p><strong>重要工具：</strong> 重氮化反应的重换反应<br>ArN2+X- → ArCl (CuCl&#x2F;HCl)、ArBr (CuBr&#x2F;HBr)、ArI (KI&#x2F;I2)、ArOH (H₂O,H+)、ArCN (CuCN)、ArH (H3PO₂)</p>
-<h3 id="9-3-药物分子合成——逆合成分析"><a href="#9-3-药物分子合成——逆合成分析" class="headerlink" title="9.3 药物分子合成——逆合成分析"></a>9.3 药物分子合成——逆合成分析</h3><p><strong>基本策略：</strong></p>
-<ol>
-<li>从目标分子逆向切断，推断前体</li>
-<li>识别关键C–C键形成反应</li>
-<li>规划官能团转化顺序</li>
-</ol>
-<p><strong>常用C–C键形成反应：</strong></p>
-<ul>
-<li>格氏反应：C&#x3D;O + RMgX → 醇</li>
-<li>羟醛缩合：C&#x3D;O + C&#x3D;O → C–C</li>
-<li>Wittig反应：C&#x3D;O + 叶立德 → C&#x3D;C</li>
-<li>Claisen酯缩合：酯 + 酯 → β-酮酸酯</li>
-<li>迈克尔加成：烯醇负离子 + a,β-不饱和C&#x3D;O → 1,4-加成</li>
-<li>傅克反应：ArH + RX&#x2F;RCOX</li>
-<li>炔钠 + 卤代烷</li>
-</ul>
-<p><strong>常用官能团转化：</strong></p>
-<ul>
-<li>C&#x3D;O → CH₂（黄鸣龙&#x2F;Clemmensen）</li>
-<li>C&#x3D;O → CHOH（NaBH₄&#x2F;LiAlH₄）</li>
-<li>RX → RMgX → 各种反应</li>
-<li>ROH → RX（HX&#x2F;PX3&#x2F;SOCl₂）</li>
-<li>重氮盐 → OH, Cl, Br, I, CN, H</li>
-</ul>
-<h3 id="9-4-合成题解题步骤"><a href="#9-4-合成题解题步骤" class="headerlink" title="9.4 合成题解题步骤"></a>9.4 合成题解题步骤</h3><ol>
-<li>分析目标分子的骨架和官能团</li>
-<li>进行逆合成切断（优先切断C-X键和易形成的C–C键）</li>
-<li>写出合成路线（从简单原料出发）</li>
-<li>标注反应条件</li>
-</ol>
-<hr>
-<h2 id="附录：核心反应式速查表"><a href="#附录：核心反应式速查表" class="headerlink" title="附录：核心反应式速查表"></a>附录：核心反应式速查表</h2><h3 id="加成反应"><a href="#加成反应" class="headerlink" title="加成反应"></a>加成反应</h3><table>
-<thead>
-<tr>
-<th>反应类型</th>
-<th>反应物</th>
-<th>试剂</th>
-<th>产物</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>烯烃亲电加成</td>
-<td>RCH&#x3D;CH₂</td>
-<td>HX</td>
-<td>RCHXCH₃</td>
-<td>马氏规则</td>
-</tr>
-<tr>
-<td>烯烃反马加成</td>
-<td>RCH&#x3D;CH₂</td>
-<td>HBr&#x2F;ROOR</td>
-<td>RCH₂CH₂Br</td>
-<td>自由基机理</td>
-</tr>
-<tr>
-<td>烯烃硼氢化氧化</td>
-<td>RCH&#x3D;CH₂</td>
-<td>B2H6, H₂O₂&#x2F;OH-</td>
-<td>RCH₂CH₂OH</td>
-<td>反马、顺式加成</td>
-</tr>
-<tr>
-<td>炔烃氢化(顺)</td>
-<td>RC≡CR’</td>
-<td>H₂&#x2F;Lindlar</td>
-<td>顺式-RCH&#x3D;CHR’</td>
-<td>立体专一</td>
-</tr>
-<tr>
-<td>炔烃氢化(反)</td>
-<td>RC≡CR’</td>
-<td>Na&#x2F;NH₃(l)</td>
-<td>反式-RCH&#x3D;CHR’</td>
-<td>立体专一</td>
-</tr>
-<tr>
-<td>环氧化物(碱)</td>
-<td>环氧</td>
-<td>OH-&#x2F;H₂O</td>
-<td>反式邻二醇</td>
-<td>SN2, 位阻小处</td>
-</tr>
-<tr>
-<td>环氧化物(酸)</td>
-<td>环氧</td>
-<td>H₂O&#x2F;H+</td>
-<td>反式邻二醇</td>
-<td>SN1, 取代多处</td>
-</tr>
-<tr>
-<td>a,β-不饱和酮</td>
-<td>RCOCH&#x3D;CH₂</td>
-<td>R2CuLi</td>
-<td>RCOCH₂CH₂R</td>
-<td>1,4-加成</td>
-</tr>
-</tbody></table>
-<h3 id="氧化反应"><a href="#氧化反应" class="headerlink" title="氧化反应"></a>氧化反应</h3><table>
-<thead>
-<tr>
-<th>反应</th>
-<th>条件</th>
-<th>产物</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>烯烃臭氧化</td>
-<td>O3, Zn&#x2F;H₂O</td>
-<td>醛&#x2F;酮</td>
-</tr>
-<tr>
-<td>烯烃KMnO₄(稀冷碱)</td>
-<td>KMnO₄, OH-, 冷</td>
-<td>顺式邻二醇</td>
-</tr>
-<tr>
-<td>烯烃KMnO₄(热酸)</td>
-<td>KMnO₄&#x2F;H+, △</td>
-<td>C&#x3D;C断裂→羧酸&#x2F;酮</td>
-</tr>
-<tr>
-<td>伯醇氧化</td>
-<td>KMnO₄&#x2F;H+ 或 CrO3&#x2F;H+</td>
-<td>羧酸</td>
-</tr>
-<tr>
-<td>仲醇氧化</td>
-<td>KMnO₄&#x2F;H+ 或 Jones</td>
-<td>酮</td>
-</tr>
-<tr>
-<td>邻二醇氧化</td>
-<td>HIO4 或 Pb(OAc)4</td>
-<td>C–C断裂→2个C&#x3D;O</td>
-</tr>
-<tr>
-<td>末端炔烃Ag+</td>
-<td>Ag(NH₃)2NO3</td>
-<td>白色炔银沉淀</td>
-</tr>
-</tbody></table>
-<h3 id="还原反应"><a href="#还原反应" class="headerlink" title="还原反应"></a>还原反应</h3><table>
-<thead>
-<tr>
-<th>反应</th>
-<th>条件</th>
-<th>产物</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>醛→伯醇</td>
-<td>LiAlH₄&#x2F;NaBH₄</td>
-<td>RCH₂OH</td>
-</tr>
-<tr>
-<td>酮→仲醇</td>
-<td>LiAlH₄&#x2F;NaBH₄</td>
-<td>R2CHOH</td>
-</tr>
-<tr>
-<td>羧酸→伯醇</td>
-<td>LiAlH₄</td>
-<td>RCH₂OH</td>
-</tr>
-<tr>
-<td>酯→2伯醇</td>
-<td>LiAlH₄</td>
-<td>RCH₂OH + R’OH</td>
-</tr>
-<tr>
-<td>C&#x3D;O→CH₂</td>
-<td>NH₂NH₂&#x2F;KOH(黄鸣龙)</td>
-<td>烷烃</td>
-</tr>
-<tr>
-<td>C&#x3D;O→CH₂</td>
-<td>Zn(Hg)&#x2F;HCl(Clemmensen)</td>
-<td>烷烃</td>
-</tr>
-<tr>
-<td>炔→顺式烯</td>
-<td>H₂&#x2F;Lindlar</td>
-<td>顺式烯烃</td>
-</tr>
-<tr>
-<td>炔→反式烯</td>
-<td>Na&#x2F;NH₃(l)</td>
-<td>反式烯烃</td>
-</tr>
-</tbody></table>
-<h3 id="缩合-C–C键形成"><a href="#缩合-C–C键形成" class="headerlink" title="缩合&#x2F;C–C键形成"></a>缩合&#x2F;C–C键形成</h3><table>
-<thead>
-<tr>
-<th>反应</th>
-<th>反应物</th>
-<th>条件</th>
-<th>产物</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>羟醛缩合</td>
-<td>含a-H的醛&#x2F;酮</td>
-<td>OH-&#x2F;H+</td>
-<td>β-羟基醛&#x2F;酮→a,β-不饱和</td>
-</tr>
-<tr>
-<td>Claisen酯缩合</td>
-<td>含a-H的酯</td>
-<td>C2H5ONa</td>
-<td>β-酮酸酯</td>
-</tr>
-<tr>
-<td>Perkin</td>
-<td>芳香醛+酸酐</td>
-<td>羧酸盐</td>
-<td>β-芳基-a,β-不饱和酸</td>
-</tr>
-<tr>
-<td>Knoevenagel</td>
-<td>醛&#x2F;酮+活泼亚甲基</td>
-<td>吡啶</td>
-<td>a,β-不饱和化合物</td>
-</tr>
-<tr>
-<td>Darzens</td>
-<td>醛&#x2F;酮+α-卤代酸酯</td>
-<td>强碱</td>
-<td>a,β-环氧酸酯</td>
-</tr>
-<tr>
-<td>Wittig</td>
-<td>醛&#x2F;酮+叶立德</td>
-<td>-</td>
-<td>烯烃</td>
-</tr>
-<tr>
-<td>Michael</td>
-<td>烯醇负离子+a,β-不饱和C&#x3D;O</td>
-<td>碱</td>
-<td>1,4-加成</td>
-</tr>
-<tr>
-<td>傅克烷基化</td>
-<td>苯+RX</td>
-<td>AlCl3</td>
-<td>烷基苯</td>
-</tr>
-<tr>
-<td>傅克酰基化</td>
-<td>苯+RCOX</td>
-<td>AlCl3</td>
-<td>酮</td>
-</tr>
-</tbody></table>
-<h3 id="消除反应"><a href="#消除反应" class="headerlink" title="消除反应"></a>消除反应</h3><table>
-<thead>
-<tr>
-<th>反应</th>
-<th>条件</th>
-<th>产物</th>
-<th>特征</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>E2</td>
-<td>强碱(KOH&#x2F;EtOH)</td>
-<td>烯烃</td>
-<td>反式共平面，查依采夫产物</td>
-</tr>
-<tr>
-<td>E1</td>
-<td>弱碱&#x2F;加热</td>
-<td>烯烃</td>
-<td>碳正离子中间体，可重排</td>
-</tr>
-<tr>
-<td>Hofmann消除</td>
-<td>季铵碱加热</td>
-<td>少取代烯烃</td>
-<td>霍夫曼产物</td>
-</tr>
-</tbody></table>
-<h3 id="重排反应"><a href="#重排反应" class="headerlink" title="重排反应"></a>重排反应</h3><table>
-<thead>
-<tr>
-<th>反应</th>
-<th>条件</th>
-<th>产物</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>频哪醇重排</td>
-<td>邻二醇+H+, △</td>
-<td>酮</td>
-<td>迁移: 芳基&gt;H&gt;烷基</td>
-</tr>
-<tr>
-<td>Claisen重排</td>
-<td>烯丙基芳基醚, △</td>
-<td>邻烯丙基苯酚</td>
-<td>周环反应</td>
-</tr>
-<tr>
-<td>Hofmann降解</td>
-<td>酰胺+Br2&#x2F;NaOH</td>
-<td>少1C的胺</td>
-<td>碳链缩短</td>
-</tr>
-<tr>
-<td>联苯胺重排</td>
-<td>氢化偶氮苯+H+</td>
-<td>联苯胺</td>
-<td>二氨基联苯</td>
-</tr>
-</tbody></table>
-<hr>
-<blockquote>
-<p><strong>预祝考试顺利！</strong><br>关键在：反应机理箭头画法（频哪醇重排）、立体化学判断（E2消除、环氧化物开环、Wittig反应）、合成路线设计的逻辑性和各章命名规则的熟练度。</p>
-</blockquote>
+                
 
-      
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/">
+                            📚 思想道德与法治期末复习网站
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+这是一套交互式复习工具，把题库变成了能刷、能背、能定位的复习台。
+
+网站功能📖 题目浏览与筛选网站收录了教材六个章节的简答题、论述题、材料题，按章节分类整理，支持：
+
+按章节筛选：绪论、第一章（人生观）、第二章（人生价值）、第三章（理想信念）、第四章（社会主义核心价值观）、第五章（道德观）、第六章（法治观）
+按题型筛选：简答题 &#x2F; 论述题 &#x2F; 材料题
+全文搜索：支持搜...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Jul 04 2026 22:46:10 GMT+0800">
+                
+                    2026-07-04
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/">学习资源</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E6%80%9D%E6%94%BF/">思政</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E5%A4%8D%E4%B9%A0/">复习</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E6%9C%9F%E6%9C%AB/">期末</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/" data-id="cmr67q7j700003ss0bx4q3b3g" data-title="有机化学期末复习手册" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
+    <a href="/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/">Read more<span class="seo-reader-text">📚 思想道德与法治期末复习网站</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-
-  
-    <article id="post-my-first-blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/04/my-first-blog/" class="article-date">
-  <time class="dt-published" datetime="2026-07-04T08:30:12.000Z" itemprop="datePublished">2026-07-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+                </div>
+            </li>
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/04/my-first-blog/">My First Blog</a>
-    </h1>
-  
+            <li class="home-article-item">
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>我的第一篇Blog</p>
+                
 
-      
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">
+                            分析化学课程知识总结
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            分析化学课程知识总结
+授课教师：李浩老师（药学院深圳）&amp; 郑义武副教授（药学院深圳）教材：武汉大学《分析化学》第六版&#x2F;湖南大学版&#x2F;人卫第9版成绩构成：平时40% + 期末60%
+
+
+第一章 分析化学绪论分析化学的定义分析化学是关于测定物质的质和量的科学，是通过化学、物理、生物等手段获得物质、结构和形态等信息的方法论。
+分析方法的分类
+
+
+分类依据
+类别
+
+
+
+按任...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Jul 04 2026 18:44:37 GMT+0800">
+                
+                    2026-07-04
+                
+            </span>
+        </span>
+        
+            <span class="home-article-category">
+                <i class="fa-solid fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+        
+        
+            <span class="home-article-tag">
+                <i class="fa-solid fa-tags"></i>&nbsp;
+                <ul>
+                    
+                        <li>
+                            
+                            <a href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/">分析化学</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E8%8D%AF%E7%89%A9%E5%88%86%E6%9E%90/">药物分析</a>&nbsp;
+                        </li>
+                    
+                        <li>
+                            | 
+                            <a href="/tags/%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/">课程总结</a>&nbsp;
+                        </li>
+                    
+                </ul>
+            </span>
+        
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/04/my-first-blog/" data-id="cmr6425pm0001v8s036mu4yxq" data-title="My First Blog" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
+    <a href="/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">Read more<span class="seo-reader-text">分析化学课程知识总结</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/07/04/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2026-07-04T08:25:16.126Z" itemprop="datePublished">2026-07-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+                </div>
+            </li>
         
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/07/04/hello-world/">Hello World</a>
-    </h1>
-  
+            <li class="home-article-item">
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+                
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/">
+                            有机化学期末复习手册
+                        </a>
+                    </h3>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            
+基于课程课件与上届考试回忆整理 | 重点突出、题型对位、方便速查
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
-      
+第一部分：题型速览与分值分布
+
+
+题型
+题数
+考察重点
+
+
+
+命名题
+5
+烯烃顺反异构(E&#x2F;Z)、环烷烃、名称写结构、Fischer投影式
+
+
+选择题
+12
+光谱、稳定性排序、芳香性、萜类、人名反应
+
+
+判断题
+6
+SN2动力学与立体化学、糖类、蛋白质手性
+
+
+反应题
+11
+各类官能团的典型反应，含立体化学
+
+...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Jul 04 2026 17:49:41 GMT+0800">
+                
+                    2026-07-04
+                
+            </span>
+        </span>
+        
+        
     </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2026/07/04/hello-world/" data-id="cmr6425pk0000v8s0hk0x5xg8" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
+    <a href="/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/">Read more<span class="seo-reader-text">有机化学期末复习手册</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-
-  
-
-
-</section>
+                </div>
+            </li>
         
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/">学习资源</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">课程笔记</a></li></ul>
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/04/my-first-blog/">
+                            My First Blog
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            我的第一篇Blog
+
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Jul 04 2026 16:30:12 GMT+0800">
+                
+                    2026-07-04
+                
+            </span>
+        </span>
+        
+        
     </div>
-  </div>
 
+    <a href="/2026/07/04/my-first-blog/">Read more<span class="seo-reader-text">My First Blog</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/" rel="tag">分析化学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%8D%E4%B9%A0/" rel="tag">复习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E6%94%BF/" rel="tag">思政</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%9F%E6%9C%AB/" rel="tag">期末</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" rel="tag">期末复习</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8D%AF%E5%AD%A6/" rel="tag">药学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%8D%AF%E7%89%A9%E5%88%86%E6%9E%90/" rel="tag">药物分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" rel="tag">课程总结</a></li></ul>
+                </div>
+            </li>
+        
+            <li class="home-article-item">
+
+                
+
+                
+
+                
+                <div class="flex flex-col gap-5 px-7 pb-7 pt-7">
+                    <h3 class="home-article-title">
+                        <a href="/2026/07/04/hello-world/">
+                            Hello World
+                        </a>
+                    </h3>
+
+                    <div class="home-article-content markdown-body">
+                        
+                            
+                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Qu...
+                        
+                    </div>
+
+                    <div class="home-article-meta-info-container">
+    <div class="home-article-meta-info">
+        <span><i class="fa-solid fa-calendars"></i>&nbsp;
+            <span class="home-article-date" data-date="Sat Jul 04 2026 16:25:16 GMT+0800">
+                
+                    2026-07-04
+                
+            </span>
+        </span>
+        
+        
     </div>
-  </div>
 
+    <a href="/2026/07/04/hello-world/">Read more<span class="seo-reader-text">Hello World</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
+</div>
 
+                </div>
+            </li>
+        
+    </ul>
+
+    <div class="home-paginator px-7 py-5">
+        <div class="paginator">
+	<span class="page-number current">1</span>
+</div>
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6/" style="font-size: 20px;">分析化学</a> <a href="/tags/%E5%A4%8D%E4%B9%A0/" style="font-size: 10px;">复习</a> <a href="/tags/%E6%80%9D%E6%94%BF/" style="font-size: 10px;">思政</a> <a href="/tags/%E6%9C%9F%E6%9C%AB/" style="font-size: 10px;">期末</a> <a href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" style="font-size: 10px;">期末复习</a> <a href="/tags/%E8%8D%AF%E5%AD%A6/" style="font-size: 10px;">药学</a> <a href="/tags/%E8%8D%AF%E7%89%A9%E5%88%86%E6%9E%90/" style="font-size: 10px;">药物分析</a> <a href="/tags/%E8%AF%BE%E7%A8%8B%E6%80%BB%E7%BB%93/" style="font-size: 10px;">课程总结</a>
     </div>
-  </div>
+</div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">July 2026</a></li></ul>
-    </div>
-  </div>
+			</div>
 
+			
+		</div>
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
         
-          <li>
-            <a href="/2026/07/06/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%8C%87%E5%8D%97/">分析化学期末复习指南</a>
-          </li>
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        7 posts in total
+                    </span>
+                    
+                </p>
+            
+        </div>
         
-          <li>
-            <a href="/2026/07/04/%E6%80%9D%E6%83%B3%E9%81%93%E5%BE%B7%E4%B8%8E%E6%B3%95%E6%B2%BB%E5%A4%8D%E4%B9%A0%E7%BD%91%E7%AB%99/">📚 思想道德与法治期末复习网站</a>
-          </li>
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
         
-          <li>
-            <a href="/2026/07/04/%E5%88%86%E6%9E%90%E5%8C%96%E5%AD%A6%E8%AF%BE%E7%A8%8B%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/">分析化学课程知识总结</a>
-          </li>
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
+        </div>
         
-          <li>
-            <a href="/2026/07/04/%E6%9C%89%E6%9C%BA%E5%8C%96%E5%AD%A6%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E6%89%8B%E5%86%8C/">有机化学期末复习手册</a>
-          </li>
         
-          <li>
-            <a href="/2026/07/04/my-first-blog/">My First Blog</a>
-          </li>
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
         
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2026 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
 </footer>
+		</div>
+	</div>
 
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
+</div>
+
+
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    window.swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
+</script>
+
+
+
+
+	
+<script src="/js/build/main.js" type="module"></script>
+
+
+
     
+<script src="/js/build/libs/odometer.min.js"></script>
 
-
-<script src="/js/jquery-3.6.4.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+
+	
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
+
 </html>
