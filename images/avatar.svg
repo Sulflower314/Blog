@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1280" width="1280" height="1280" role="img" aria-labelledby="title desc">
+  <title id="title">Symmetric sulfur-rich molecular structure</title>
+  <desc id="desc">A clean symmetric vector redraw of a sulfur-containing molecular structure with black bonds and gold sulfur atom labels.</desc>
+  <rect width="1280" height="1280" fill="#fff"/>
+
+  <defs>
+    <style>
+      .bond,
+      .double-bond {
+        fill: none;
+        stroke: #050505;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .bond {
+        stroke-width: 8;
+      }
+
+      .double-bond {
+        stroke-width: 7;
+      }
+
+      .sulfur {
+        fill: #d4ad00;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 64px;
+        font-weight: 400;
+        dominant-baseline: middle;
+        text-anchor: middle;
+      }
+    </style>
+  </defs>
+
+  <g id="molecule">
+    <!-- Central macrocycle: symmetric about x=640, with horizontal top/bottom and vertical sides. -->
+    <path class="bond" d="M535 410 L745 410 L885 550 L885 730 L745 870 L535 870 L395 730 L395 550 Z"/>
+
+    <!-- Top thiophene unit -->
+    <path class="bond" d="M600 80 L460 230 L535 410"/>
+    <path class="bond" d="M680 80 L820 230 L745 410"/>
+    <path class="double-bond" d="M500 240 L555 380"/>
+    <path class="double-bond" d="M780 240 L725 380"/>
+
+    <!-- Upper-left thiophene unit -->
+    <path class="bond" d="M240 230 L460 230"/>
+    <path class="bond" d="M210 280 L210 470 L395 550"/>
+    <path class="double-bond" d="M228 508 L372 570"/>
+
+    <!-- Middle-left thiophene unit -->
+    <path class="bond" d="M60 620 L210 470"/>
+    <path class="bond" d="M60 660 L210 810 L395 730"/>
+    <path class="bond" d="M395 550 L395 730"/>
+    <path class="double-bond" d="M228 775 L372 715"/>
+
+    <!-- Lower-left thiophene unit -->
+    <path class="bond" d="M210 810 L210 1015"/>
+    <path class="bond" d="M255 1055 L460 1055"/>
+    <path class="bond" d="M460 1055 L535 870"/>
+    <path class="bond" d="M395 730 L535 870"/>
+    <path class="double-bond" d="M562 908 L505 1032"/>
+
+    <!-- Bottom thiophene unit -->
+    <path class="bond" d="M535 870 L745 870"/>
+    <path class="bond" d="M460 1055 L605 1205"/>
+    <path class="bond" d="M675 1205 L820 1055 L745 870"/>
+    <path class="double-bond" d="M725 908 L782 1032"/>
+
+    <!-- Lower-right thiophene unit -->
+    <path class="bond" d="M820 1055 L1025 1055"/>
+    <path class="bond" d="M1070 1015 L1070 810 L885 730"/>
+    <path class="bond" d="M745 870 L885 730"/>
+    <path class="double-bond" d="M908 715 L1052 775"/>
+
+    <!-- Middle-right thiophene unit -->
+    <path class="bond" d="M1070 810 L1220 660"/>
+    <path class="bond" d="M885 550 L885 730"/>
+    <path class="bond" d="M1070 470 L1220 620"/>
+    <path class="double-bond" d="M908 570 L1052 508"/>
+
+    <!-- Upper-right thiophene unit -->
+    <path class="bond" d="M820 230 L1040 230"/>
+    <path class="bond" d="M1070 280 L1070 470 L885 550"/>
+
+    <!-- Short sulfur attachment strokes, kept clear of the labels. -->
+    <path class="bond" d="M600 80 L602 78"/>
+    <path class="bond" d="M680 80 L678 78"/>
+    <path class="bond" d="M240 230 L230 230"/>
+    <path class="bond" d="M1040 230 L1050 230"/>
+    <path class="bond" d="M60 620 L55 625"/>
+    <path class="bond" d="M60 660 L55 655"/>
+    <path class="bond" d="M1220 620 L1225 625"/>
+    <path class="bond" d="M1220 660 L1225 655"/>
+    <path class="bond" d="M255 1055 L250 1055"/>
+    <path class="bond" d="M1025 1055 L1030 1055"/>
+
+    <!-- Sulfur atom labels -->
+    <text class="sulfur" x="640" y="45">S</text>
+    <text class="sulfur" x="205" y="230">S</text>
+    <text class="sulfur" x="40" y="640">S</text>
+    <text class="sulfur" x="220" y="1058">S</text>
+    <text class="sulfur" x="640" y="1215">S</text>
+    <text class="sulfur" x="1075" y="230">S</text>
+    <text class="sulfur" x="1240" y="640">S</text>
+    <text class="sulfur" x="1060" y="1058">S</text>
+  </g>
+</svg>

@@ -457,7 +457,7 @@
 		
 		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
 			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
-				<img src="/images/redefine-avatar.svg">
+				<img src="/images/avatar.svg">
 			</div>
 			<div class="info flex flex-col justify-between">
 				<div class="author flex items-center">
@@ -1173,6 +1173,21 @@
 
 
 	
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
