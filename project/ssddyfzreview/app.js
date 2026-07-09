@@ -16,6 +16,10 @@ function saveDone() {
 }
 
 function init() {
+  if (localStorage.getItem("reviewTheme") === "dark") {
+    document.body.classList.add("dark");
+  }
+
   const chapters = ["全部", ...new Set(data.map(x => x.chapterTitle))];
   $("#chapterFilter").innerHTML = chapters.map(x => `<option>${x}</option>`).join("");
   const types = ["全部", ...new Set(data.map(x => x.origin.type))];
@@ -26,7 +30,10 @@ function init() {
   $("#typeFilter").addEventListener("change", e => { state.type = e.target.value; render(); });
   $("#onlyPast").addEventListener("change", e => { state.onlyPast = e.target.checked; render(); });
   $("#hideAnswers").addEventListener("change", e => { state.hideAnswers = e.target.checked; render(); });
-  $("#themeBtn").addEventListener("click", () => document.body.classList.toggle("dark"));
+  $("#themeBtn").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("reviewTheme", document.body.classList.contains("dark") ? "dark" : "light");
+  });
   renderSources();
   render();
 }
