@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="系统解剖学期末复习工具：九大系统考点、108 道原创题、72 张速记卡、错题收藏与随机模考。">
+  <title>系统解剖学复习台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">跳到主要内容</a>
+
+  <header class="topbar">
+    <a class="blog-brand" href="/" aria-label="返回 FFFCX's Blog">
+      <span class="blog-avatar" aria-hidden="true"></span>
+      <span>FFFCX's Blog</span>
+    </a>
+    <div class="project-mark">
+      <span class="project-code">SA / 10</span>
+      <span>系统解剖学复习台</span>
+    </div>
+    <span class="version-tag">正式版</span>
+  </header>
+
+  <nav class="module-nav" aria-label="学习模块">
+    <button class="module-button active" type="button" data-view="overview"><span>01</span>总览</button>
+    <button class="module-button" type="button" data-view="knowledge"><span>02</span>考点</button>
+    <button class="module-button" type="button" data-view="quiz"><span>03</span>刷题</button>
+    <button class="module-button" type="button" data-view="exam"><span>04</span>模考</button>
+    <button class="module-button" type="button" data-view="cards"><span>05</span>卡片</button>
+    <button class="module-button" type="button" data-view="mistakes"><span>06</span>错题</button>
+  </nav>
+
+  <main class="app-shell">
+    <aside class="system-rail" aria-label="九大系统目录">
+      <div class="rail-heading">
+        <p class="eyebrow">第十版框架</p>
+        <h2>九大系统</h2>
+      </div>
+      <div id="systemNav" class="system-nav"></div>
+      <p class="source-note">内容为原创复习整理，不是教材官方配套题库。</p>
+    </aside>
+
+    <div class="workspace" id="workspace">
+      <section class="view-panel active" data-view-panel="overview" aria-labelledby="overviewTitle">
+        <header class="page-intro">
+          <p class="eyebrow">Clinical Anatomy Review Desk</p>
+          <h1 id="overviewTitle">把散落的结构、通路与易错点，整理成一条能反复走的复习路径。</h1>
+          <p class="lead">先定位系统，再理解结构关系，最后用题目和速记卡检验记忆。学习进度、错题、收藏与卡片掌握状态都会保存在当前浏览器。</p>
+        </header>
+
+        <div class="overview-grid">
+          <section class="progress-panel" aria-labelledby="progressTitle">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">今日进度</p>
+                <h2 id="progressTitle">继续上次复习</h2>
+              </div>
+              <span class="progress-number" id="progressNumber">0%</span>
+            </div>
+            <div class="progress-track" aria-hidden="true"><span id="overallProgress"></span></div>
+            <p class="muted" id="continueText">尚未开始答题，先从一个系统建立结构。</p>
+            <button class="primary-action" type="button" id="continueButton">从运动系统开始</button>
+          </section>
+
+          <figure class="system-map-panel">
+            <div class="map-heading"><span>九系统索引</span><strong id="mapStatus">0 / 9 已开始</strong></div>
+            <div class="system-map" id="systemMap" aria-label="九系统学习进度"></div>
+            <figcaption>每条代表一个系统；答题后会显示各系统完成度。</figcaption>
+          </figure>
+        </div>
+
+        <section class="study-route" aria-labelledby="routeTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">推荐路径</p>
+              <h2 id="routeTitle">一次复习，分成三个动作</h2>
+            </div>
+            <p>每个入口直接进入工具，不设置展示型封面页。</p>
+          </div>
+          <div class="route-list">
+            <button type="button" class="route-item" data-open-view="knowledge">
+              <span class="route-number">01</span>
+              <span><strong>建立结构</strong><small>位置、毗邻、分支与通路</small></span>
+              <span class="route-arrow" aria-hidden="true">→</span>
+            </button>
+            <button type="button" class="route-item" data-open-view="quiz">
+              <span class="route-number">02</span>
+              <span><strong>用题目检验</strong><small>单选、多选、判断与简答</small></span>
+              <span class="route-arrow" aria-hidden="true">→</span>
+            </button>
+            <button type="button" class="route-item" data-open-view="cards">
+              <span class="route-number">03</span>
+              <span><strong>压缩成记忆</strong><small>考前快速抽背与反复回看</small></span>
+              <span class="route-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="content-scope" aria-labelledby="scopeTitle">
+          <div>
+            <p class="eyebrow">内容规模</p>
+            <h2 id="scopeTitle">九系统完整覆盖，考点、题目和卡片使用同一套结构坐标。</h2>
+          </div>
+          <div class="scope-table" role="list">
+            <div role="listitem"><strong>系统框架</strong><span><b id="systemCount">9</b> 个系统</span></div>
+            <div role="listitem"><strong>原创题库</strong><span><b id="questionCount">108</b> 道题</span></div>
+            <div role="listitem"><strong>速记卡</strong><span><b id="cardCount">72</b> 张卡片</span></div>
+            <div role="listitem"><strong>知识边界</strong><span>第十版框架 + 通行解剖知识</span></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view-panel" data-view-panel="knowledge" aria-labelledby="knowledgeTitle" hidden>
+        <header class="tool-heading">
+          <div>
+            <p class="eyebrow">Knowledge Atlas</p>
+            <h1 id="knowledgeTitle">系统考点库</h1>
+            <p>用“核心结构—易混对照—通路”组织知识，减少只背孤立名词。</p>
+          </div>
+          <label class="search-field">
+            <span>检索</span>
+            <input id="knowledgeSearch" type="search" placeholder="例如：肝门、内囊、输尿管">
+          </label>
+        </header>
+        <div id="knowledgePanel" class="knowledge-panel" aria-live="polite"></div>
+      </section>
+
+      <section class="view-panel" data-view-panel="quiz" aria-labelledby="quizTitle" hidden>
+        <header class="tool-heading">
+          <div>
+            <p class="eyebrow">Question Lab</p>
+            <h1 id="quizTitle">章节刷题</h1>
+            <p>多选题先完成选择再提交；解析与正确答案在提交后出现。</p>
+          </div>
+          <div class="sample-count"><strong id="quizPosition">1 / 108</strong><span id="quizSummary">原创题库</span></div>
+        </header>
+        <div class="tool-filters" aria-label="题库筛选">
+          <label><span>系统</span><select id="quizSystemFilter"></select></label>
+          <label><span>题型</span><select id="quizTypeFilter"></select></label>
+          <button type="button" id="shuffleQuiz">随机排序</button>
+          <button type="button" id="resetQuiz">重置当前筛选记录</button>
+        </div>
+        <div id="quizPanel" class="quiz-panel" aria-live="polite"></div>
+      </section>
+
+      <section class="view-panel" data-view-panel="exam" aria-labelledby="examTitle" hidden>
+        <header class="tool-heading">
+          <div><p class="eyebrow">Exam Mode</p><h1 id="examTitle">随机模考</h1><p>从可自动判分的选择与判断题中随机组卷。</p></div>
+          <div class="exam-clock" id="examClock">00:00</div>
+        </header>
+        <div class="exam-layout">
+          <aside class="exam-setup" id="examSetup">
+            <h2>组卷设置</h2>
+            <label><span>考试系统</span><select id="examSystemFilter"></select></label>
+            <label><span>题目数量</span><select id="examCount"><option value="10">10 题</option><option value="20">20 题</option><option value="30">30 题</option></select></label>
+            <label><span>限时分钟</span><input id="examMinutes" type="number" min="1" max="120" value="15"></label>
+            <button type="button" id="startExam" class="primary-action">开始模考</button>
+            <p>交卷后自动显示得分、错题和薄弱系统，错题同步进入复习队列。</p>
+          </aside>
+          <div class="exam-stage" id="examStage">
+            <div class="empty-state large-empty"><strong>尚未开始模考</strong><span>设置题量和时间后生成随机试卷。</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-panel" data-view-panel="cards" aria-labelledby="cardsTitle" hidden>
+        <header class="tool-heading">
+          <div>
+            <p class="eyebrow">Rapid Recall</p>
+            <h1 id="cardsTitle">记忆速记卡</h1>
+            <p>点击卡片或按 Enter / Space 翻面，掌握状态会保存在浏览器中。</p>
+          </div>
+          <div class="sample-count"><strong id="cardPosition">1 / 72</strong><span id="cardSummary">0 张已掌握</span></div>
+        </header>
+        <div class="tool-filters card-filters" aria-label="卡片筛选">
+          <label><span>系统</span><select id="cardSystemFilter"></select></label>
+          <button type="button" id="shuffleCards">随机抽卡</button>
+          <button type="button" id="toggleCardMastery">标记已掌握</button>
+        </div>
+        <div id="cardPanel" class="card-stage"></div>
+        <div class="card-controls" aria-label="卡片操作">
+          <button type="button" id="prevCard">上一张</button>
+          <button type="button" id="flipCard" class="primary-action">翻转卡片</button>
+          <button type="button" id="nextCard">下一张</button>
+        </div>
+      </section>
+
+      <section class="view-panel" data-view-panel="mistakes" aria-labelledby="mistakesTitle" hidden>
+        <header class="tool-heading">
+          <div><p class="eyebrow">Review Queue</p><h1 id="mistakesTitle">错题与收藏</h1><p>错题自动记录，收藏由你主动标记；两类内容可分别筛选。</p></div>
+          <div class="sample-count"><strong id="reviewCount">0</strong><span>待复习题目</span></div>
+        </header>
+        <div class="review-toolbar">
+          <div class="segmented-control" aria-label="复习队列类型">
+            <button type="button" class="active" data-review-filter="all">全部</button>
+            <button type="button" data-review-filter="mistakes">错题</button>
+            <button type="button" data-review-filter="favorites">收藏</button>
+          </div>
+          <button type="button" id="practiceReview">练习当前队列</button>
+          <button type="button" id="clearReview" class="danger-action">清空错题</button>
+        </div>
+        <div id="reviewList" class="review-list"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <p>系统解剖学复习台 · 108 道原创题 · 72 张速记卡 · 非教材官方配套资料</p>
+  </footer>
+
+  <dialog id="confirmDialog" class="confirm-dialog">
+    <form method="dialog">
+      <h2 id="confirmTitle">确认操作</h2>
+      <p id="confirmMessage">此操作无法撤销。</p>
+      <div class="dialog-actions">
+        <button value="cancel">取消</button>
+        <button value="confirm" class="danger-action">确认</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
