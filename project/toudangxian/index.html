@@ -298,19 +298,30 @@
     }
     @media (max-width: 720px) {
       .notice { grid-template-columns: 1fr; }
-      .table-wrap { max-height: none; padding: 10px; background: var(--paper-deep); }
-      table { min-width: 0; }
-      thead { display: none; }
-      tbody { display: grid; gap: 10px; }
-      tbody tr { display: grid; grid-template-columns: 1fr 1fr; padding: 13px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--panel); }
-      tbody tr:hover { background: var(--panel); }
-      td { display: flex; justify-content: space-between; gap: 14px; padding: 8px 5px; border-bottom: 1px solid var(--line-soft); text-align: right !important; white-space: normal; }
-      td::before { content: attr(data-label); flex: 0 0 auto; color: var(--muted); font-size: 12px; }
-      td:nth-child(3) { grid-column: 1 / -1; order: -1; font-size: 17px; }
-      td:nth-child(3)::before { content: none; }
-      td:last-child, td:nth-last-child(2) { border-bottom: 0; }
+      .table-wrap { max-height: none; padding: 0; overflow-x: hidden; background: var(--panel); }
+      table { display: block; min-width: 0; width: 100%; }
+      thead, tbody { display: block; width: 100%; }
+      thead { position: sticky; top: 0; z-index: 3; background: var(--panel-strong); }
+      thead tr, tbody tr {
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr) 100px 70px;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      th, td { display: none; position: static; padding: 12px 8px; border: 0; white-space: nowrap; }
+      th:nth-child(1), td:nth-child(1),
+      th:nth-child(3), td:nth-child(3),
+      th:nth-child(4), td:nth-child(4),
+      th:nth-child(5), td:nth-child(5) { display: block; }
+      th:nth-child(1), td:nth-child(1) { grid-column: 1; text-align: right; }
+      th:nth-child(3), td:nth-child(3) { grid-column: 2; min-width: 0; text-align: left; white-space: normal; overflow-wrap: anywhere; }
+      th:nth-child(5), td:nth-child(5) { grid-column: 3; text-align: right; }
+      th:nth-child(4), td:nth-child(4) { grid-column: 4; text-align: right; }
+      tbody tr:hover { background: var(--jade-soft); }
+      td::before { content: none; }
       .empty-row { display: block; }
-      .empty-row td { display: block; }
+      .empty-row td { display: block; width: 100%; text-align: center; }
       .pager-buttons { flex-wrap: wrap; }
     }
     @media (max-width: 520px) {
@@ -354,10 +365,10 @@
 
     <section class="workspace" aria-label="投档数据表">
       <div class="tabs" role="tablist" aria-label="分类">
-        <button class="tab" data-group="high" role="tab" aria-selected="true">高校专项计划 <small data-count="high"></small></button>
+        <button class="tab" data-group="high" role="tab" aria-selected="false">高校专项计划 <small data-count="high"></small></button>
         <button class="tab" data-group="foreign" role="tab" aria-selected="false">中外合作办学 <small data-count="foreign"></small></button>
         <button class="tab" data-group="joint" role="tab" aria-selected="false">联合培养 <small data-count="joint"></small></button>
-        <button class="tab" data-group="other" role="tab" aria-selected="false">其他普通类 <small data-count="other"></small></button>
+        <button class="tab" data-group="other" role="tab" aria-selected="true">其他普通类 <small data-count="other"></small></button>
         <button class="tab" data-group="all" role="tab" aria-selected="false">全部数据 <small data-count="all"></small></button>
       </div>
 
@@ -366,7 +377,7 @@
         <input class="control" id="max-rank" type="number" min="1" step="1" placeholder="位次不超过" aria-label="最低投档位次上限">
         <select class="control" id="sort" aria-label="排序方式">
           <option value="school-rank">院校代码 → 最低位次</option>
-          <option value="school-merge-max-rank">同校合并：最大最低位次</option>
+          <option value="school-merge-max-rank" selected>同校合并：最大最低位次</option>
           <option value="rank-asc">最低位次：由前到后</option>
           <option value="score-desc">最低分：由高到低</option>
           <option value="plan-desc">计划数：由多到少</option>
@@ -402,7 +413,7 @@
           <button class="pager-button" id="next-page" type="button">下一页</button>
           <button class="pager-button" id="last-page" type="button">末页</button>
         </div>
-        <span class="sort-note" id="sort-note">默认：院校代码升序，同院校内最低位次升序</span>
+        <span class="sort-note" id="sort-note">同校按院校代码合并；保留最大的最低排位并升序排列</span>
       </footer>
     </section>
   </main>
@@ -441,7 +452,7 @@
       all: "全部数据"
     };
     const FIELD = { page: 0, code: 1, name: 2, group: 3, plan: 4, admitted: 5, score: 6, rank: 7, category: 8 };
-    const state = { group: "high", query: "", maxRank: null, sort: "school-rank", page: 1, pageSize: 50, filtered: [] };
+    const state = { group: "other", query: "", maxRank: null, sort: "school-merge-max-rank", page: 1, pageSize: 50, filtered: [] };
     const numberFormat = new Intl.NumberFormat("zh-CN");
     const collator = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
 
@@ -632,10 +643,10 @@
     document.querySelector("#reset").addEventListener("click", () => {
       elements.search.value = "";
       elements.maxRank.value = "";
-      elements.sort.value = "school-rank";
+      elements.sort.value = "school-merge-max-rank";
       state.query = "";
       state.maxRank = null;
-      state.sort = "school-rank";
+      state.sort = "school-merge-max-rank";
       render(true);
     });
     document.querySelector("#export").addEventListener("click", exportCsv);
